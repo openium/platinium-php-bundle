@@ -1,0 +1,4 @@
+services:
+#    platinium.example:
+#        class: Openium\PlatiniumBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

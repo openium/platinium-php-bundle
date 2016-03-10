@@ -1,0 +1,3 @@
+platinium_homepage:
+    path:     /
+    defaults: { _controller: PlatiniumBundle:Default:index }
