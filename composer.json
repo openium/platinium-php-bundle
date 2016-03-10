@@ -1,20 +1,25 @@
 {
-    "name" : "Openium/PlatiniumBundle",
+    "name" : "openium/platinium-bundle",
     "description" : "Provides push notification on Platinium for your Symfony2 Project",
     "type" : "symfony-bundle",
+    "homepage" : "http://platinium.openium.fr",
     "authors" : [{
         "name" : "Openium",
         "email" : "contact@openium.fr"
     }],
     "keywords" : [
-        "platinium push-notification push notification openium"
+        "platinium", 
+	"push-notification",
+	"push",
+	"notification", 
+	"openium"
     ],
     "license" : [
         "MIT"
     ],
     "require" : {
 	"php" : ">=5.4.0",
-        "symfony/framework-bundle" : ">=2.6,<3.0",
+        "symfony/framework-bundle" : ">=2.6,<3.0"
     },
     "autoload" : {
         "psr-0" : {
