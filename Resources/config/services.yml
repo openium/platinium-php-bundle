@@ -1,4 +1,31 @@
+parameters:
+    openium_platinium.server_url: 'https://platinium.openium.fr'
+    openium_platinium.notify_path: '/api/server/notify.json'
+    openium_platinium.subscribed_path: '/api/server/subscribed.json'
+    openium_platinium.server.id: '%env(resolve:PLATINIUM_SERVER_ID)%'
+    openium_platinium.server.key: '%env(resolve:PLATINIUM_SERVER_KEY)%'
+    openium_platinium.token.dev: '%env(resolve:PLATINIUM_SERVER_TOKEN_DEV)%'
+    openium_platinium.token.prod: '%env(resolve:PLATINIUM_SERVER_TOKEN_PROD)%'
+
 services:
-#    platinium.example:
-#        class: Openium\PlatiniumBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    openium_platinium.signature_service:
+        class: Openium\PlatiniumBundle\Service\PlatiniumSignatureService
+        arguments:
+            - '%openium_platinium.server.id%'
+            - '%openium_platinium.server.key%'
+        public: true
+
+    openium_platinium.parameter_bab_service:
+        class: Openium\PlatiniumBundle\Service\PlatiniumParameterBagService
+        arguments:
+            - '%kernel.environment%'
+            - 'openium_platinium.token.dev'
+            - 'openium_platinium.token.prod'
+        public: true
+
+    openium_platinium.client:
+        class: Openium\PlatiniumBundle\PlatiniumClient
+        arguments:
+            - '%openium_platinium.server_url%'
+            - 'openium_platinium.signature_service'
+        public: true

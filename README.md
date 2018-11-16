@@ -1,7 +1,26 @@
-# Platinium - Symfony 2 bundle
+# Platinium Bundle
 
-For more information about Platinium, check out the main repository https://github.com/openium/platinium
+This bundle provide a easy way to send a push message by using [Platinium](http://platinium.openium.fr/)
 
-## Purpose
+## Installation
 
-Provides push notification on Platinium for your Symfony2 Project
+Open a command console, enter your project directory and execute:
+
+```bash
+$ composer require openium/platinium-bundle
+```
+
+## Configuration
+
+You need to add 4 information in the .env
+```
+###> openium/platinium ###
+PLATINIUM_SERVER_ID=
+PLATINIUM_SERVER_KEY=
+PLATINIUM_SERVER_TOKEN_DEV=
+PLATINIUM_SERVER_TOKEN_PROD=
+###< openium/platinium ###
+```
+
+## Usage
+

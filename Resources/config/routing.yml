@@ -1,3 +1,0 @@
-platinium_bundle_push:
-    path:     /push
-    defaults: { _controller: PlatiniumBundle:Push:index }
