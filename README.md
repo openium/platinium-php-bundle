@@ -30,7 +30,7 @@ Example :
 // set by dependency injection
 $notifier = new PlatiniumNotifier(...);
 // get number of future pushed devices
-$deviceCount = $notifier->subscribe($groups, $langs, $latitude, $longitude, $tolerance, $radius);
+$deviceCount = $notifier->subscribe($groups, $langs, $langNotIn, $latitude, $longitude, $tolerance, $radius);
 // send a push message
-$pushSended = $notifier->notify($message, $groups, $langs, $latitude, $longitude, $tolerance, $radius);
+$pushSended = $notifier->notify($message, $groups, $langs, $langNotIn, $latitude, $longitude, $tolerance, $radius);
 ```

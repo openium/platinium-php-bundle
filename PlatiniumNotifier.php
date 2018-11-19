@@ -75,6 +75,7 @@ class PlatiniumNotifier
      * @param string $message the message to push
      * @param array $groups notification groups
      * @param array $langs notification langs
+     * @param bool $langNotIn
      * @param float|null $latitude for geolocated push
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
@@ -82,19 +83,19 @@ class PlatiniumNotifier
      *
      * @throws InvalidPushGeolocationConfigurationException if geolocation parameters are incorrect
      * @throws PushException if push is not sent
-     *
      * @return bool true => push is sent to platinium
      */
     public function notify(
         string $message,
         array $groups = [],
         array $langs = [],
+        bool $langNotIn = false,
         float $latitude = null,
         float $longitude = null,
         int $tolerance = null,
         int $radius = null
     ): bool {
-        $notificationInformation = new PlatiniumPushInformation($groups, $langs);
+        $notificationInformation = new PlatiniumPushInformation($groups, $langs, $langNotIn);
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
@@ -113,13 +114,13 @@ class PlatiniumNotifier
      *
      * @param array $groups notification groups
      * @param array $langs notification langs
+     * @param bool $langNotIn
      * @param float|null $latitude for geolocated push
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
      * @param int|null $radius for geolocated push
      *
      * @throws InvalidPushGeolocationConfigurationException
-     *
      * @return int
      */
     public function subscribed(
