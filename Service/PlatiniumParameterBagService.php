@@ -11,7 +11,7 @@
 
 namespace Openium\PlatiniumBundle\Service;
 
-use Openium\Platinium\Exception\InvalidPushGeolocationConfigurationException;
+use Openium\PlatiniumBundle\Exception\InvalidPushGeolocationConfigurationException;
 use Openium\PlatiniumBundle\Entity\PlatiniumPushInformation;
 use Openium\PlatiniumBundle\Entity\PlatiniumPushNotification;
 
@@ -61,12 +61,14 @@ class PlatiniumParameterBagService
      *
      * @return array
      */
-    public function createPushParam(PlatiniumPushInformation $pushInformation, PlatiniumPushNotification $notification): array
-    {
+    public function createPushParam(
+        PlatiniumPushInformation $pushInformation,
+        PlatiniumPushNotification $notification
+    ): array {
         $token = ($this->env === 'prod') ? $this->tokenProd : $this->tokenDev;
         $paramsBag = [
             'api_notify[app]' => $token,
-            'api_notify[params]' => $notification->jsonformat()
+            'api_notify[params]' => $notification->jsonFormat()
         ];
         if (count($pushInformation->getGroups()) > 0) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());

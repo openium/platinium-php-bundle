@@ -14,13 +14,23 @@ $ composer require openium/platinium-bundle
 
 You need to add 4 information in the .env
 ```
-###> openium/platinium ###
+###> openium/platinium-bundle ###
 PLATINIUM_SERVER_ID=
 PLATINIUM_SERVER_KEY=
 PLATINIUM_SERVER_TOKEN_DEV=
 PLATINIUM_SERVER_TOKEN_PROD=
-###< openium/platinium ###
+###< openium/platinium-bundle ###
 ```
 
 ## Usage
 
+Example :
+
+```php
+// set by dependency injection
+$notifier = new PlatiniumNotifier(...);
+// get number of future pushed devices
+$deviceCount = $notifier->subscribe($groups, $langs, $latitude, $longitude, $tolerance, $radius);
+// send a push message
+$pushSended = $notifier->notify($message, $groups, $langs, $latitude, $longitude, $tolerance, $radius);
+```

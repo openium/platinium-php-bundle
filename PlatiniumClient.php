@@ -60,9 +60,6 @@ class PlatiniumClient
      */
     public function send(string $path, array $paramsBag): PlatiniumPushResponse
     {
-        if ($this->env === 'test') {
-            return new PlatiniumPushResponse(1, 'test');
-        }
         $requestHeaders = $this->platiniumSignatureService->createServerSignature($path, $paramsBag);
         $fullURL = $this->serverUrl . $path;
         $params_string = str_replace('+', '%20', http_build_query($paramsBag));
@@ -100,6 +97,7 @@ class PlatiniumClient
 
     /**
      * parseHttpHeaders
+     * transform string headers to ["key" => "value"] array
      *
      * @param string $headers
      *
@@ -114,7 +112,7 @@ class PlatiniumClient
             $header = explode(": ", $value);
             if ($header[0] && !isset($header[1])) {
                 $headerData['status'] = $header[0];
-            } elseif ($header[0] && $header[1]) {
+            } elseif ($header[0] && isset($header[1])) {
                 $headerData[$header[0]] = $header[1];
             }
         }

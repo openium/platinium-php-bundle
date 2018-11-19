@@ -69,11 +69,11 @@ class PlatiniumPushNotification
     }
 
     /**
-     * jsonformat
+     * jsonFormat
      *
      * @return string
      */
-    public function jsonformat(): string
+    public function jsonFormat(): string
     {
         $jsonArray = ['newsstand' => $this->isNewsStand()];
         if (!empty($this->message)) {

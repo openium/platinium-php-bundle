@@ -29,3 +29,12 @@ services:
             - '%openium_platinium.server_url%'
             - 'openium_platinium.signature_service'
         public: true
+
+    openium_platinium.notifier:
+        class: Openium\PlatiniumBundle\PlatiniumNotifier
+        arguments:
+            - 'openium_platinium.client'
+            - 'openium_platinium.parameter_bab_service'
+            - '%openium_platinium.notify_path%'
+            - '%openium_platinium.subscribed_path%'
+        public: true

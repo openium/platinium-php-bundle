@@ -9,17 +9,14 @@
  * @link     https://www.openium.fr/
  */
 
-namespace Openium\Platinium\Exception;
-
-use \Exception;
-use \Throwable;
+namespace Openium\PlatiniumBundle\Exception;
 
 /**
  * Class InvalidPushGeolocationConfigurationException
  *
- * @package Openium\Platinium\Exception
+ * @package Openium\PlatiniumBundle\Exception
  */
-class InvalidPushGeolocationConfigurationException extends Exception
+class InvalidPushGeolocationConfigurationException extends \Exception
 {
     /**
      * @var string
@@ -36,12 +33,12 @@ class InvalidPushGeolocationConfigurationException extends Exception
      *
      * @param string|null $message
      * @param int $code
-     * @param Throwable|null $previous
+     * @param \Throwable|null $previous
      */
     public function __construct(
         string $message = self::DEFAULT_MESSAGE,
         int $code = self::DEFAULT_CODE,
-        Throwable $previous = null
+        \Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }
