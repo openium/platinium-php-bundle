@@ -45,13 +45,13 @@ class PlatiniumParameterBagServiceTest extends TestCase
         );
     }
 
-    public function testCreatePushParamWithValidGeolocation()
+    public function testCreatePushParamWithValidGeolocationAndLangNotIn()
     {
         $env = 'test';
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
 
-        $ppi = new PlatiniumPushInformation(['grp1'], ['fr']);
+        $ppi = new PlatiniumPushInformation(['grp1'], ['fr'], true);
         $ppi->setGeolocation(1.15, 2.16, 50, 500);
         $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
 
@@ -61,6 +61,7 @@ class PlatiniumParameterBagServiceTest extends TestCase
             [
                 'api_notify[app]' => $tokenDev,
                 'api_notify[params]' => $ppn->jsonFormat(),
+                'api_notify[langNotIn]' => true,
                 'api_notify[idsGroups]' => json_encode(['grp1']),
                 'api_notify[langs]' => json_encode(['fr']),
                 'api_notify[latitude]' => 1.15,

@@ -68,8 +68,11 @@ class PlatiniumParameterBagService
         $token = ($this->env === 'prod') ? $this->tokenProd : $this->tokenDev;
         $paramsBag = [
             'api_notify[app]' => $token,
-            'api_notify[params]' => $notification->jsonFormat()
+            'api_notify[params]' => $notification->jsonFormat(),
         ];
+        if ($pushInformation->isLangNotIn()) {
+            $paramsBag['api_notify[langNotIn]'] = $pushInformation->isLangNotIn();
+        }
         if (count($pushInformation->getGroups()) > 0) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());
         }

@@ -23,11 +23,12 @@ class PlatiniumPushInformationTest extends TestCase
 {
     public function testPlatiniumPushNotification()
     {
-        $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"]);
+        $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"], true);
         $this->assertTrue($ppi instanceof PlatiniumPushInformation);
         $this->assertEquals(["grp1", "grp2"], $ppi->getGroups());
         $this->assertEquals(["fr", "en"], $ppi->getLangs());
         $this->assertFalse($ppi->isGeolocated());
+        $this->assertTrue($ppi->isLangNotIn());
         $this->assertTrue($ppi->isValidGeolocation());
         $this->assertNull($ppi->getLongitude());
         $ppi->setGeolocation(1.15, 2.16, 50, 500);
@@ -41,5 +42,7 @@ class PlatiniumPushInformationTest extends TestCase
         $ppi->setLangs(['de', 'it']);
         $this->assertEquals(['grp3', 'grp4'], $ppi->getGroups());
         $this->assertEquals(['de', 'it'], $ppi->getLangs());
+        $ppi->setLangNotIn(false);
+        $this->assertFalse($ppi->isLangNotIn());
     }
 }

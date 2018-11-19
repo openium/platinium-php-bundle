@@ -19,36 +19,59 @@ namespace Openium\PlatiniumBundle\Entity;
 class PlatiniumPushInformation
 {
     /**
+     * List of push group
+     *
      * @var array
      */
     protected $groups;
 
     /**
+     * List of Langs
+     * (in platinium : notification.lang in [...])
+     *
      * @var array
      */
     protected $langs;
 
     /**
+     * Inverse list of lang
+     * (in platinium : notification.lang not in [...])
+     *
+     * @var boolean
+     */
+    protected $langNotIn;
+
+    /**
+     * Is geolocation config is set
+     *
      * @var bool
      */
     private $isGeolocated = false;
 
     /**
+     * Latitude for geolocation
+     *
      * @var float
      */
     private $latitude;
 
     /**
+     * Longitude for geolocation
+     *
      * @var float
      */
     private $longitude;
 
     /**
+     * Tolerance for geolocation
+     *
      * @var int
      */
     private $tolerance;
 
     /**
+     * Radius for geolocation
+     *
      * @var int
      */
     private $radius;
@@ -58,11 +81,13 @@ class PlatiniumPushInformation
      *
      * @param array $groups
      * @param array $langs
+     * @param bool $langNotIn
      */
-    public function __construct(array $groups, array $langs)
+    public function __construct(array $groups, array $langs, bool $langNotIn = false)
     {
         $this->groups = $groups;
         $this->langs = $langs;
+        $this->langNotIn = $langNotIn;
     }
 
     /**
@@ -159,6 +184,29 @@ class PlatiniumPushInformation
     public function isGeolocated(): bool
     {
         return $this->isGeolocated;
+    }
+
+    /**
+     * Getter for langNotIn
+     *
+     * @return bool
+     */
+    public function isLangNotIn(): bool
+    {
+        return $this->langNotIn;
+    }
+
+    /**
+     * Setter for langNotIn
+     *
+     * @param bool $langNotIn
+     *
+     * @return self
+     */
+    public function setLangNotIn(bool $langNotIn): self
+    {
+        $this->langNotIn = $langNotIn;
+        return $this;
     }
 
     /**

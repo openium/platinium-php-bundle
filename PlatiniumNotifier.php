@@ -125,12 +125,13 @@ class PlatiniumNotifier
     public function subscribed(
         array $groups = [],
         array $langs = [],
+        bool $langNotIn = false,
         float $latitude = null,
         float $longitude = null,
         int $tolerance = null,
         int $radius = null
     ): int {
-        $notificationInformation = new PlatiniumPushInformation($groups, $langs);
+        $notificationInformation = new PlatiniumPushInformation($groups, $langs, $langNotIn);
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
