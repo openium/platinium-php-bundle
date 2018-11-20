@@ -10,6 +10,7 @@ parameters:
 services:
     openium_platinium.signature_service:
         class: Openium\PlatiniumBundle\Service\PlatiniumSignatureService
+        autowire: false
         arguments:
             - '%openium_platinium.server.id%'
             - '%openium_platinium.server.key%'
@@ -17,24 +18,28 @@ services:
 
     openium_platinium.parameter_bab_service:
         class: Openium\PlatiniumBundle\Service\PlatiniumParameterBagService
+        autowire: false
         arguments:
             - '%kernel.environment%'
-            - 'openium_platinium.token.dev'
-            - 'openium_platinium.token.prod'
+            - '%openium_platinium.token.dev%'
+            - '%openium_platinium.token.prod%'
         public: true
 
     openium_platinium.client:
         class: Openium\PlatiniumBundle\PlatiniumClient
+        autowire: false
         arguments:
             - '%openium_platinium.server_url%'
-            - 'openium_platinium.signature_service'
+            - '@openium_platinium.signature_service'
+            - '%kernel.environment%'
         public: true
 
     openium_platinium.notifier:
         class: Openium\PlatiniumBundle\PlatiniumNotifier
+        autowire: false
         arguments:
-            - 'openium_platinium.client'
-            - 'openium_platinium.parameter_bab_service'
+            - '@openium_platinium.client'
+            - '@openium_platinium.parameter_bab_service'
             - '%openium_platinium.notify_path%'
             - '%openium_platinium.subscribed_path%'
         public: true
