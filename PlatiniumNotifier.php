@@ -80,6 +80,10 @@ class PlatiniumNotifier
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
      * @param int|null $radius for geolocated push
+     * @param array $paramsBag
+     * @param int $badgeValue
+     * @param bool $newsStand
+     * @param string|null $sound
      *
      * @throws InvalidPushGeolocationConfigurationException if geolocation parameters are incorrect
      * @throws PushException if push is not sent
@@ -93,13 +97,17 @@ class PlatiniumNotifier
         float $latitude = null,
         float $longitude = null,
         int $tolerance = null,
-        int $radius = null
+        int $radius = null,
+        array $paramsBag = [],
+        int $badgeValue = 0,
+        bool $newsStand = false,
+        string $sound = null
     ): bool {
         $notificationInformation = new PlatiniumPushInformation($groups, $langs, $langNotIn);
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
-        $notification = new PlatiniumPushNotification($message);
+        $notification = new PlatiniumPushNotification($message, $paramsBag, $badgeValue, $newsStand, $sound);
         $parameterBag = $this->platiniumParameterBagService->createPushParam($notificationInformation, $notification);
         $response = $this->client->send($this->notifyPath, $parameterBag);
         $this->verifyResponse($response);

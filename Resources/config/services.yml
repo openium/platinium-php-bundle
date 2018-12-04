@@ -14,7 +14,7 @@ services:
         arguments:
             - '%openium_platinium.server.id%'
             - '%openium_platinium.server.key%'
-        public: true
+        public: false
 
     openium_platinium.parameter_bab_service:
         class: Openium\PlatiniumBundle\Service\PlatiniumParameterBagService
@@ -23,7 +23,7 @@ services:
             - '%kernel.environment%'
             - '%openium_platinium.token.dev%'
             - '%openium_platinium.token.prod%'
-        public: true
+        public: false
 
     openium_platinium.client:
         class: Openium\PlatiniumBundle\PlatiniumClient
@@ -32,7 +32,7 @@ services:
             - '%openium_platinium.server_url%'
             - '@openium_platinium.signature_service'
             - '%kernel.environment%'
-        public: true
+        public: false
 
     openium_platinium.notifier:
         class: Openium\PlatiniumBundle\PlatiniumNotifier
