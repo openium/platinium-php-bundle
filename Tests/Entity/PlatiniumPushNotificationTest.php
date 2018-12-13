@@ -36,7 +36,7 @@ class PlatiniumPushNotificationTest extends TestCase
         $this->assertEquals(["key1" => "value1","key2" => "value2"], $ppn->getParamsBag());
         $this->assertEquals('push.mp3', $ppn->getSound());
         $this->assertFalse($ppn->isNewsStand());
-        $this->assertEquals('[{"newsstand":false,"message":"This is a push message","sound":"push.mp3","badge":2,"paramsbag":{"key1":"value1","key2":"value2"}}]', $ppn->jsonFormat());
+        $this->assertEquals('[{"newsstand":0,"message":"This is a push message","sound":"push.mp3","badge":2,"paramsbag":{"key1":"value1","key2":"value2"}}]', $ppn->jsonFormat());
         $ppn->setMessage("This is a new push message");
         $ppn->setBadgeValue(3);
         $ppn->setNewsStand(true);
@@ -46,7 +46,7 @@ class PlatiniumPushNotificationTest extends TestCase
         $this->assertEquals(3, $ppn->getBadgeValue());
         $this->assertEquals(["key1" => "value1","key2" => "value2", 'key3' => 'value3'], $ppn->getParamsBag());
         $this->assertEquals('newSound.mp3', $ppn->getSound());
-        $this->assertEquals('[{"newsstand":true,"message":"This is a new push message","sound":"newSound.mp3","badge":3,"paramsbag":{"key1":"value1","key2":"value2","key3":"value3"}}]', $ppn->jsonFormat());
+        $this->assertEquals('[{"newsstand":1,"message":"This is a new push message","sound":"newSound.mp3","badge":3,"paramsbag":{"key1":"value1","key2":"value2","key3":"value3"}}]', $ppn->jsonFormat());
         $this->assertTrue($ppn->isNewsStand());
         $ppn->setParamsBag(['param' => 'value']);
         $this->assertEquals(['param' => 'value'], $ppn->getParamsBag());
