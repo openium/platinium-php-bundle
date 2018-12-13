@@ -2,6 +2,10 @@
 
 This bundle provide a easy way to send a push message by using [Platinium](http://platinium.openium.fr/)
 
+## Caution
+
+Versions < 1.1.4 are deprecated
+
 ## Installation
 
 Open a command console, enter your project directory and execute:
