@@ -21,6 +21,11 @@ use Openium\PlatiniumBundle\Service\PlatiniumSignatureService;
  */
 class PlatiniumClient
 {
+    // platinium status code header name
+    private const PLATINIUM_STATUS_CODE_HEADER = 'X-Platinium-Status-Code';
+    // alternative status code header name (without upper letter)
+    private const PLATINIUM_STATUS_CODE_HEADER_ALT = 'x-platinium-status-code';
+
     /**
      * @var string
      */
@@ -73,8 +78,10 @@ class PlatiniumClient
                 $responseHeaderSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
                 $stringResponseHeader = substr($response, 0, $responseHeaderSize);
                 $responseHeaders = $this->parseHttpHeaders($stringResponseHeader);
-                if (array_key_exists('x-platinium-status-code', $responseHeaders)) {
-                    $httpStatusCode = $responseHeaders['x-platinium-status-code'];
+                if (array_key_exists(self::PLATINIUM_STATUS_CODE_HEADER, $responseHeaders)) {
+                    $httpStatusCode = $responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER];
+                } elseif (array_key_exists(self::PLATINIUM_STATUS_CODE_HEADER_ALT, $responseHeaders)) {
+                    $httpStatusCode = $responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER_ALT];
                 }
                 $result = substr($response, $responseHeaderSize);
             } else {
