@@ -168,20 +168,30 @@ class PlatiniumNotifier
     public function verifyResponse(PlatiniumPushResponse $response): bool
     {
         if ($response->getStatus() !== PlatiniumPushResponse::STATUS_SUCCESS) {
-            throw new PushException($response->getResult());
+            $errorMessage = sprintf('Status: %s\nResult: %s', $response->getStatus(), $response->getResult());
+            throw new PushException($errorMessage);
         }
         $data = json_decode($response->getResult());
         if (is_null($data) || empty($data)) {
             throw new PushException('Push Send Failed : JSON Parse Failed.');
         }
-        /*
-         * TODO may by check each property
-         * id,is_dev,ids_groups,langs,notification_per_minute,
-         * creation_date,params,tolerance,state,origin,token_notifications
-         */
-        if (!array_key_exists('id', $data)) {
-            $errorMessage = 'Push Send Failed : invalid result.';
-            throw new PushException($errorMessage);
+        $responseKeys = [
+            'id',
+            'is_dev',
+            'ids_groups',
+            'langs',
+            'notification_per_minute',
+            'creation_date',
+            'params',
+            'state',
+            'origin',
+            'token_notifications',
+        ];
+        foreach ($responseKeys as $key) {
+            if (!array_key_exists($key, $data)) {
+                $errorMessage = 'Push Send Failed : invalid result. Missing ' . $key;
+                throw new PushException($errorMessage);
+            }
         }
         return true;
     }

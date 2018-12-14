@@ -1,6 +1,6 @@
 {
     "name" : "openium/platinium-bundle",
-    "description" : "Provides push notification on Platinium for your Symfony2 Project",
+    "description" : "Provides push notification on Platinium for your Symfony4 Project",
     "type" : "symfony-bundle",
     "homepage" : "http://platinium.openium.fr",
     "authors" : [{
@@ -19,6 +19,8 @@
     ],
     "require" : {
         "php": ">=7.1",
+        "ext-curl": "*",
+        "ext-json": "*",
         "symfony/framework-bundle": "^4.0"
     },
     "require-dev": {

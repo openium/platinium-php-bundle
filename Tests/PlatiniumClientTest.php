@@ -25,7 +25,7 @@ class PlatiniumClientTest extends TestCase
     private function getMockClient(): PlatiniumClient
     {
         $signatureService = new PlatiniumSignatureService('MockedServerId', 'MockedServerKey');
-        return new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService, 'test');
+        return new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService);
     }
 
     public function testParseHttpHeadersWithRightHeaders()

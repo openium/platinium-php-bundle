@@ -43,7 +43,7 @@ class PlatiniumNotifierTest extends TestCase
             );
         }
         $signatureService = new PlatiniumSignatureService(self::$apiServerId, self::$apiServerKey);
-        $client = new PlatiniumClient('https://platinium.openium.fr', $signatureService, 'test');
+        $client = new PlatiniumClient('https://platinium.openium.fr', $signatureService);
         $parameterBagService = new PlatiniumParameterBagService('test', self::$tokenDev, self::$tokenProd);
         $notifier = new PlatiniumNotifier(
             $client,
@@ -57,7 +57,7 @@ class PlatiniumNotifierTest extends TestCase
     private function getMockNotifier(): PlatiniumNotifier
     {
         $signatureService = new PlatiniumSignatureService('MockedServerId', 'MockedServerKey');
-        $client = new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService, 'test');
+        $client = new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService);
         $parameterBagService = new PlatiniumParameterBagService('test', self::$tokenProd, self::$tokenProd);
         $notifier = new PlatiniumNotifier(
             $client,

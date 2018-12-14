@@ -17,7 +17,7 @@ use Openium\PlatiniumBundle\Service\PlatiniumSignatureService;
 /**
  * Class PlatiniumClientService
  *
- * @package Openium\PlatiniumBundle\Service
+ * @package Openium\PlatiniumBundle
  */
 class PlatiniumClient
 {
@@ -32,22 +32,15 @@ class PlatiniumClient
     private $platiniumSignatureService;
 
     /**
-     * @var string
-     */
-    private $env;
-
-    /**
      * PlatiniumClientService constructor.
      *
      * @param string $serverUrl
      * @param PlatiniumSignatureService $platiniumSignatureService
-     * @param string $env
      */
-    public function __construct(string $serverUrl, PlatiniumSignatureService $platiniumSignatureService, string $env)
+    public function __construct(string $serverUrl, PlatiniumSignatureService $platiniumSignatureService)
     {
         $this->platiniumSignatureService = $platiniumSignatureService;
         $this->serverUrl = $serverUrl;
-        $this->env = $env;
     }
 
     /**
@@ -109,11 +102,11 @@ class PlatiniumClient
         $headers = explode("\n", $headers);
         $headerData = [];
         foreach ($headers as $value) {
-            $header = explode(": ", $value);
+            $header = explode(":", $value, 2);
             if ($header[0] && !isset($header[1])) {
-                $headerData['status'] = $header[0];
+                $headerData['status'] = trim($header[0]);
             } elseif ($header[0] && isset($header[1])) {
-                $headerData[$header[0]] = $header[1];
+                $headerData[trim($header[0])] = trim($header[1]);
             }
         }
         return $headerData;
