@@ -4,7 +4,7 @@ This bundle provide a easy way to send a push message by using [Platinium](http:
 
 ## Caution
 
-Versions < 1.1.4 are deprecated
+Versions < 1.1.6 are deprecated
 
 ## Installation
 
