@@ -184,8 +184,7 @@ class PlatiniumNotifier
             'creation_date',
             'params',
             'state',
-            'origin',
-            'token_notifications',
+            'origin'
         ];
         foreach ($responseKeys as $key) {
             if (!array_key_exists($key, $data)) {
