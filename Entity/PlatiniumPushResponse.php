@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -22,21 +21,20 @@ class PlatiniumPushResponse
 
     /**
      * The status returned by the query
+     *
      * @var int $status
      */
     protected $status;
 
     /**
      * Raw result of the query
+     *
      * @var string $result
      */
     protected $result;
 
     /**
      * PlatiniumPushResponse constructor.
-     *
-     * @param int $status
-     * @param string $result
      */
     public function __construct(int $status, string $result)
     {
@@ -46,8 +44,6 @@ class PlatiniumPushResponse
 
     /**
      * Getter for status
-     *
-     * @return int
      */
     public function getStatus(): int
     {
@@ -56,10 +52,6 @@ class PlatiniumPushResponse
 
     /**
      * Setter for status
-     *
-     * @param int $status
-     *
-     * @return self
      */
     public function setStatus(int $status): self
     {
@@ -69,8 +61,6 @@ class PlatiniumPushResponse
 
     /**
      * Getter for result
-     *
-     * @return string
      */
     public function getResult(): string
     {
@@ -79,10 +69,6 @@ class PlatiniumPushResponse
 
     /**
      * Setter for result
-     *
-     * @param string $result
-     *
-     * @return self
      */
     public function setResult(string $result): self
     {

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -12,6 +11,7 @@
 namespace Openium\PlatiniumBundle\Tests;
 
 use Openium\PlatiniumBundle\Entity\PlatiniumPushResponse;
+use Openium\PlatiniumBundle\Exception\PushException;
 use Openium\PlatiniumBundle\PlatiniumClient;
 use Openium\PlatiniumBundle\PlatiniumNotifier;
 use Openium\PlatiniumBundle\Service\PlatiniumParameterBagService;
@@ -30,8 +30,11 @@ class PlatiniumNotifierTest extends TestCase
      * Don't commit real config
      */
     public static $apiServerId = "";
+
     public static $apiServerKey = "";
+
     public static $tokenDev = "";
+
     // fake token to avoid real push
     public static $tokenProd = "DontPushInProd";
 
@@ -44,31 +47,37 @@ class PlatiniumNotifierTest extends TestCase
         }
         $signatureService = new PlatiniumSignatureService(self::$apiServerId, self::$apiServerKey);
         $client = new PlatiniumClient('https://platinium.openium.fr', $signatureService);
-        $parameterBagService = new PlatiniumParameterBagService('test', self::$tokenDev, self::$tokenProd);
-        $notifier = new PlatiniumNotifier(
+        $parameterBagService = new PlatiniumParameterBagService(
+            'test',
+            self::$tokenDev,
+            self::$tokenProd
+        );
+        return new PlatiniumNotifier(
             $client,
             $parameterBagService,
             '/api/server/notify.json',
             '/api/server/subscribed.json'
         );
-        return $notifier;
     }
 
     private function getMockNotifier(): PlatiniumNotifier
     {
         $signatureService = new PlatiniumSignatureService('MockedServerId', 'MockedServerKey');
         $client = new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService);
-        $parameterBagService = new PlatiniumParameterBagService('test', self::$tokenProd, self::$tokenProd);
-        $notifier = new PlatiniumNotifier(
+        $parameterBagService = new PlatiniumParameterBagService(
+            'test',
+            self::$tokenProd,
+            self::$tokenProd
+        );
+        return new PlatiniumNotifier(
             $client,
             $parameterBagService,
             '/api/server/notify.json',
             '/api/server/subscribed.json'
         );
-        return $notifier;
     }
 
-    public function testNotifier()
+    public function testNotifier(): void
     {
         $notifier = $this->getRealNotifier();
         $this->assertTrue($notifier instanceof PlatiniumNotifier);
@@ -77,7 +86,7 @@ class PlatiniumNotifierTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testSubscriber()
+    public function testSubscriber(): void
     {
         $notifier = $this->getRealNotifier();
         $this->assertTrue($notifier instanceof PlatiniumNotifier);
@@ -86,7 +95,7 @@ class PlatiniumNotifierTest extends TestCase
         $this->assertTrue($count > 0);
     }
 
-    public function testVerifyResponseWithSuccessResponse()
+    public function testVerifyResponseWithSuccessResponse(): void
     {
         $notifier = $this->getMockNotifier();
         $responseContent = json_encode(
@@ -101,41 +110,50 @@ class PlatiniumNotifierTest extends TestCase
                 'tolerance' => null,
                 'state' => 1,
                 'origin' => '',
-                'token_notifications' => []
+                'token_notifications' => [],
             ]
         );
-        $response = new PlatiniumPushResponse(PlatiniumPushResponse::STATUS_SUCCESS, $responseContent);
+        $response = new PlatiniumPushResponse(
+            PlatiniumPushResponse::STATUS_SUCCESS,
+            $responseContent
+        );
         $this->assertTrue($notifier->verifyResponse($response));
     }
 
     /**
-     * @expectedException Openium\PlatiniumBundle\Exception\PushException
-     * @expectedExceptionMessage Invalid push data : dev iOS certificate has expired
      */
-    public function testVerifyResponseWithFailResponse()
+    public function testVerifyResponseWithFailResponse(): void
     {
+        self::expectException(PushException::class);
+        self::expectExceptionMessage('Invalid push data : dev iOS certificate has expired');
         $notifier = $this->getMockNotifier();
-        $response = new PlatiniumPushResponse(1, "Invalid push data : dev iOS certificate has expired");
+        $response = new PlatiniumPushResponse(
+            1,
+            "Invalid push data : dev iOS certificate has expired"
+        );
         $notifier->verifyResponse($response);
     }
 
     /**
-     * @expectedException Openium\PlatiniumBundle\Exception\PushException
-     * @expectedExceptionMessage Push Send Failed : JSON Parse Failed.
      */
-    public function testVerifyResponseWithWrongResultResponse()
+    public function testVerifyResponseWithWrongResultResponse(): void
     {
+        self::expectException(PushException::class);
+        self::expectExceptionMessage('Push Send Failed : JSON Parse Failed.');
         $notifier = $this->getMockNotifier();
-        $response = new PlatiniumPushResponse(0, "Invalid push data : dev iOS certificate has expired");
+        $response = new PlatiniumPushResponse(
+            0,
+            "Invalid push data : dev iOS certificate has expired"
+        );
         $notifier->verifyResponse($response);
     }
 
     /**
-     * @expectedException Openium\PlatiniumBundle\Exception\PushException
-     * @expectedExceptionMessage Push Send Failed : invalid result.
      */
-    public function testVerifyResponseWithIncompleteResultResponse()
+    public function testVerifyResponseWithIncompleteResultResponse(): void
     {
+        self::expectException(PushException::class);
+        self::expectExceptionMessage('Push Send Failed : invalid result.');
         $notifier = $this->getMockNotifier();
         $responseContent = json_encode(
             [
@@ -148,7 +166,7 @@ class PlatiniumNotifierTest extends TestCase
                 'tolerance' => null,
                 'state' => 1,
                 'origin' => '',
-                'token_notifications' => []
+                'token_notifications' => [],
             ]
         );
         $response = new PlatiniumPushResponse(0, $responseContent);

@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class PlatiniumPushResponseTest extends TestCase
 {
-    public function testPlatiniumPushResponse()
+    public function testPlatiniumPushResponse(): void
     {
         $ppr = new PlatiniumPushResponse(200, 'OK');
         $this->assertTrue($ppr instanceof PlatiniumPushResponse);

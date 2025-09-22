@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -13,6 +12,7 @@ namespace Openium\PlatiniumBundle\Tests\Service;
 
 use Openium\PlatiniumBundle\Entity\PlatiniumPushInformation;
 use Openium\PlatiniumBundle\Entity\PlatiniumPushNotification;
+use Openium\PlatiniumBundle\Exception\InvalidPushGeolocationConfigurationException;
 use Openium\PlatiniumBundle\Service\PlatiniumParameterBagService;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 
@@ -23,15 +23,13 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class PlatiniumParameterBagServiceTest extends TestCase
 {
-    public function testCreatePushParam()
+    public function testCreatePushParam(): void
     {
         $env = 'test';
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
-
         $ppi = new PlatiniumPushInformation(['grp1'], ['fr']);
         $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
-
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $result = $ppbs->createPushParam($ppi, $ppn);
         $this->assertEquals(
@@ -39,22 +37,20 @@ class PlatiniumParameterBagServiceTest extends TestCase
                 'api_notify[app]' => $tokenDev,
                 'api_notify[params]' => $ppn->jsonFormat(),
                 'api_notify[idsGroups]' => json_encode(['grp1']),
-                'api_notify[langs]' => json_encode(['fr'])
+                'api_notify[langs]' => json_encode(['fr']),
             ],
             $result
         );
     }
 
-    public function testCreatePushParamWithValidGeolocationAndLangNotIn()
+    public function testCreatePushParamWithValidGeolocationAndLangNotIn(): void
     {
         $env = 'test';
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
-
         $ppi = new PlatiniumPushInformation(['grp1'], ['fr'], true);
         $ppi->setGeolocation(1.15, 2.16, 50, 500);
         $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
-
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $result = $ppbs->createPushParam($ppi, $ppn);
         $this->assertEquals(
@@ -67,23 +63,22 @@ class PlatiniumParameterBagServiceTest extends TestCase
                 'api_notify[latitude]' => 1.15,
                 'api_notify[longitude]' => 2.16,
                 'api_notify[radius]' => 500,
-                'api_notify[tolerance]' => 50
+                'api_notify[tolerance]' => 50,
             ],
             $result
         );
     }
 
-    /**
-     * @expectedException Openium\PlatiniumBundle\Exception\InvalidPushGeolocationConfigurationException
-     * @expectedExceptionMessage Invalid push geolocation configuration
-     */
-    public function testCreatePushParamWithInvalidGeolocation()
+    public function testCreatePushParamWithInvalidGeolocation(): void
     {
+        self::expectException(InvalidPushGeolocationConfigurationException::class);
+        self::expectExceptionMessage('Invalid push geolocation configuration');
         $env = 'test';
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
-
-        $ppi = $this->getMockBuilder(PlatiniumPushInformation::class)->disableOriginalConstructor()->getMock();
+        $ppi = $this->getMockBuilder(PlatiniumPushInformation::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $ppi->expects($this->once())
             ->method('isGeolocated')
             ->will($this->returnValue(true));

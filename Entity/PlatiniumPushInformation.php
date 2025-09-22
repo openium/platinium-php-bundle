@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -21,17 +20,17 @@ class PlatiniumPushInformation
     /**
      * List of push group
      *
-     * @var array
+     * @var string[]
      */
-    protected $groups;
+    protected $groups = [];
 
     /**
      * List of Langs
      * (in platinium : notification.lang in [...])
      *
-     * @var array
+     * @var string[]
      */
-    protected $langs;
+    protected $langs = [];
 
     /**
      * Inverse list of lang
@@ -39,7 +38,7 @@ class PlatiniumPushInformation
      *
      * @var boolean
      */
-    protected $langNotIn;
+    protected $langNotIn = false;
 
     /**
      * Is geolocation config is set
@@ -51,36 +50,36 @@ class PlatiniumPushInformation
     /**
      * Latitude for geolocation
      *
-     * @var float
+     * @var float|null
      */
-    private $latitude;
+    private $latitude = null;
 
     /**
      * Longitude for geolocation
      *
-     * @var float
+     * @var float|null
      */
-    private $longitude;
+    private $longitude = null;
 
     /**
      * Tolerance for geolocation
      *
-     * @var int
+     * @var int|null
      */
-    private $tolerance;
+    private $tolerance = null;
 
     /**
      * Radius for geolocation
      *
-     * @var int
+     * @var int|null
      */
-    private $radius;
+    private $radius = null;
 
     /**
      * PlatiniumPushInformation constructor.
      *
-     * @param array $groups
-     * @param array $langs
+     * @param string[] $groups
+     * @param string[] $langs
      * @param bool $langNotIn
      */
     public function __construct(array $groups, array $langs, bool $langNotIn = false)
@@ -93,7 +92,7 @@ class PlatiniumPushInformation
     /**
      * Getter for groups
      *
-     * @return array
+     * @return string[]
      */
     public function getGroups(): array
     {
@@ -103,9 +102,9 @@ class PlatiniumPushInformation
     /**
      * Setter for groups
      *
-     * @param array $groups
+     * @param string[] $groups
      *
-     * @return self
+     * @return PlatiniumPushInformation
      */
     public function setGroups(array $groups): self
     {
@@ -116,7 +115,7 @@ class PlatiniumPushInformation
     /**
      * Getter for langs
      *
-     * @return array
+     * @return string[]
      */
     public function getLangs(): array
     {
@@ -126,9 +125,9 @@ class PlatiniumPushInformation
     /**
      * Setter for langs
      *
-     * @param array $langs
+     * @param string[] $langs
      *
-     * @return self
+     * @return PlatiniumPushInformation
      */
     public function setLangs(array $langs): self
     {
@@ -138,8 +137,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for latitude
-     *
-     * @return float|null
      */
     public function getLatitude(): ?float
     {
@@ -148,8 +145,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for longitude
-     *
-     * @return float|null
      */
     public function getLongitude(): ?float
     {
@@ -158,8 +153,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for tolerance
-     *
-     * @return int|null
      */
     public function getTolerance(): ?int
     {
@@ -168,8 +161,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for radius
-     *
-     * @return int|null
      */
     public function getRadius(): ?int
     {
@@ -178,8 +169,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for isGeolocated
-     *
-     * @return bool
      */
     public function isGeolocated(): bool
     {
@@ -188,8 +177,6 @@ class PlatiniumPushInformation
 
     /**
      * Getter for langNotIn
-     *
-     * @return bool
      */
     public function isLangNotIn(): bool
     {
@@ -198,10 +185,6 @@ class PlatiniumPushInformation
 
     /**
      * Setter for langNotIn
-     *
-     * @param bool $langNotIn
-     *
-     * @return self
      */
     public function setLangNotIn(bool $langNotIn): self
     {
@@ -211,26 +194,23 @@ class PlatiniumPushInformation
 
     /**
      * setGeolocation
-     *
-     * @param float $latitude
-     * @param float $longitude
-     * @param int $tolerance
-     * @param int $radius
-     *
-     * @return PlatiniumPushInformation
      */
-    public function setGeolocation(float $latitude, float $longitude, int $tolerance, int $radius): self
-    {
+    public function setGeolocation(
+        float $latitude,
+        float $longitude,
+        int $tolerance,
+        int $radius
+    ): self {
         if (!empty($latitude)) {
             $this->latitude = $latitude;
         }
         if (!empty($longitude)) {
             $this->longitude = $longitude;
         }
-        if (!empty($tolerance)) {
+        if ($tolerance !== 0) {
             $this->tolerance = $tolerance;
         }
-        if (!empty($radius)) {
+        if ($radius !== 0) {
             $this->radius = $radius;
         }
         $this->isGeolocated = true;
@@ -239,20 +219,17 @@ class PlatiniumPushInformation
 
     /**
      * isValidGeolocation
-     *
-     * @return bool
      */
     public function isValidGeolocation(): bool
     {
         if (!$this->isGeolocated) {
             return true;
-        } else {
-            return (
-                !empty($this->radius)
-                && !empty($this->latitude)
-                && !empty($this->longitude)
-                && !empty($this->tolerance)
-            );
         }
+        return (
+            $this->radius !== null
+            && $this->latitude !== null
+            && $this->longitude !== null
+            && $this->tolerance !== null
+        );
     }
 }

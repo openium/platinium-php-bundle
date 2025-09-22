@@ -16,7 +16,7 @@ services:
             - '%openium_platinium.server.key%'
         public: false
 
-    openium_platinium.parameter_bab_service:
+    openium_platinium.parameter_bag_service:
         class: Openium\PlatiniumBundle\Service\PlatiniumParameterBagService
         autowire: false
         arguments:
@@ -39,7 +39,7 @@ services:
         autowire: false
         arguments:
             - '@openium_platinium.client'
-            - '@openium_platinium.parameter_bab_service'
+            - '@openium_platinium.parameter_bag_service'
             - '%openium_platinium.notify_path%'
             - '%openium_platinium.subscribed_path%'
         public: true

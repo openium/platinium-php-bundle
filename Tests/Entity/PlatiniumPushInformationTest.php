@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class PlatiniumPushInformationTest extends TestCase
 {
-    public function testPlatiniumPushNotification()
+    public function testPlatiniumPushNotification(): void
     {
         $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"], true);
         $this->assertTrue($ppi instanceof PlatiniumPushInformation);

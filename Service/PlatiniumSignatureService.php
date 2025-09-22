@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -32,9 +31,6 @@ class PlatiniumSignatureService
 
     /**
      * PlatiniumSignatureService constructor.
-     *
-     * @param string $apiServerId
-     * @param string $apiServerKey
      */
     public function __construct(string $apiServerId, string $apiServerKey)
     {
@@ -47,16 +43,16 @@ class PlatiniumSignatureService
      * Create a valid signature for a url and params
      *
      * @param string $url
-     * @param array|null $params
+     * @param array<string, mixed> $params
      *
-     * @return array
+     * @return string[]
      */
     public function createServerSignature(string $url, array $params = []): array
     {
-        $timestamp = strval(round(microtime(1) * 1000));
-        $paramString = (empty($params))?
-            ''
-            : $paramString = str_replace('+', '%20', http_build_query($params));
+        $timestamp = strval(round(microtime(true) * 1000));
+        $paramString = ($params === [])
+            ? ''
+            : str_replace('+', '%20', http_build_query($params));
         $stringToSign = sprintf(
             "%s\n%s\n%s\n%s\n%s",
             self::HTTP_VERB,
@@ -67,7 +63,7 @@ class PlatiniumSignatureService
         );
         $signature = sha1($stringToSign);
         $header = sprintf(
-            "x-ws-signature: WS-Signature UUID=\"%s\", Signature=\"%s\", Created=\"%s\"",
+            'x-ws-signature: WS-Signature UUID="%s", Signature="%s", Created="%s"',
             $this->apiServerId,
             $signature,
             $timestamp

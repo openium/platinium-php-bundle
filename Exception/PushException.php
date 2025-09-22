@@ -31,14 +31,14 @@ class PushException extends \Exception
     /**
      * LunaException constructor.
      *
-     * @param string|null $message
+     * @param string $message
      * @param int $code
      * @param \Throwable|null $previous
      */
     public function __construct(
         string $message = self::DEFAULT_MESSAGE,
         int $code = self::DEFAULT_CODE,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }

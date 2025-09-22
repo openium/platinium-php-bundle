@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -23,7 +22,7 @@ class PlatiniumPushNotification
      *
      * @var null|string
      */
-    protected $message = null;
+    protected $message;
 
     /**
      * Value of the application badge
@@ -37,7 +36,7 @@ class PlatiniumPushNotification
      *
      * @var null|string
      */
-    protected $sound = null;
+    protected $sound;
 
     /**
      * Is notification newsstand
@@ -50,7 +49,7 @@ class PlatiniumPushNotification
     /**
      * Array of additionnal parameters
      *
-     * @var null
+     * @var array<string, string>
      */
     protected $paramsBag = [];
 
@@ -58,7 +57,7 @@ class PlatiniumPushNotification
      * PlatiniumPushNotification constructor.
      *
      * @param string|null $message
-     * @param array $paramsBag
+     * @param array<string, string> $paramsBag
      * @param int $badgeValue
      * @param bool $newsStand
      * @param string|null $sound
@@ -79,12 +78,10 @@ class PlatiniumPushNotification
 
     /**
      * jsonFormat
-     *
-     * @return string
      */
     public function jsonFormat(): string
     {
-        $jsonArray = ['newsstand' => $this->isNewsStand()? 1 : 0];
+        $jsonArray = ['newsstand' => $this->isNewsStand() ? 1 : 0];
         if (!empty($this->message)) {
             $jsonArray['message'] = $this->message;
         }
@@ -102,11 +99,6 @@ class PlatiniumPushNotification
 
     /**
      * addAdditionalParameter
-     *
-     * @param string $key
-     * @param string $value
-     *
-     * @return PlatiniumPushNotification
      */
     public function addAdditionalParameter(string $key, string $value): self
     {
@@ -116,8 +108,6 @@ class PlatiniumPushNotification
 
     /**
      * Getter for message
-     *
-     * @return null|string
      */
     public function getMessage(): ?string
     {
@@ -126,10 +116,6 @@ class PlatiniumPushNotification
 
     /**
      * Setter for message
-     *
-     * @param null|string $message
-     *
-     * @return self
      */
     public function setMessage(?string $message): self
     {
@@ -139,8 +125,6 @@ class PlatiniumPushNotification
 
     /**
      * Getter for badgeValue
-     *
-     * @return int
      */
     public function getBadgeValue(): int
     {
@@ -149,10 +133,6 @@ class PlatiniumPushNotification
 
     /**
      * Setter for badgeValue
-     *
-     * @param int $badgeValue
-     *
-     * @return self
      */
     public function setBadgeValue(int $badgeValue): self
     {
@@ -162,8 +142,6 @@ class PlatiniumPushNotification
 
     /**
      * Getter for sound
-     *
-     * @return null|string
      */
     public function getSound(): ?string
     {
@@ -172,10 +150,6 @@ class PlatiniumPushNotification
 
     /**
      * Setter for sound
-     *
-     * @param null|string $sound
-     *
-     * @return self
      */
     public function setSound(?string $sound): self
     {
@@ -185,8 +159,6 @@ class PlatiniumPushNotification
 
     /**
      * Getter for newsStand
-     *
-     * @return bool
      */
     public function isNewsStand(): bool
     {
@@ -195,10 +167,6 @@ class PlatiniumPushNotification
 
     /**
      * Setter for newsStand
-     *
-     * @param bool $newsStand
-     *
-     * @return self
      */
     public function setNewsStand(bool $newsStand): self
     {
@@ -209,7 +177,7 @@ class PlatiniumPushNotification
     /**
      * Getter for paramsBag
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getParamsBag(): array
     {
@@ -219,9 +187,9 @@ class PlatiniumPushNotification
     /**
      * Setter for paramsBag
      *
-     * @param array $paramsBag
+     * @param array<string, string> $paramsBag
      *
-     * @return self
+     * @return PlatiniumPushNotification
      */
     public function setParamsBag(array $paramsBag): self
     {

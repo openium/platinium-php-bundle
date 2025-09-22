@@ -28,7 +28,7 @@ class PlatiniumClientTest extends TestCase
         return new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService);
     }
 
-    public function testParseHttpHeadersWithRightHeaders()
+    public function testParseHttpHeadersWithRightHeaders(): void
     {
         $headers = <<<EOT
 HTTP/1.1 200 OK

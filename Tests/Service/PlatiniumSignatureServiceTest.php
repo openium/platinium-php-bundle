@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class PlatiniumSignatureServiceTest extends TestCase
 {
-    public function testCreatePushParam()
+    public function testCreatePushParam(): void
     {
         $apiServerId = 'server_id';
         $apiServerKey = 'server_key';
@@ -37,7 +37,7 @@ class PlatiniumSignatureServiceTest extends TestCase
         $this->assertEquals(1, $match);
     }
 
-    public function testCreatePushParamWithoutParamaters()
+    public function testCreatePushParamWithoutParamaters(): void
     {
         $apiServerId = 'server_id';
         $apiServerKey = 'server_key';

@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
  */
 class PlatiniumPushNotificationTest extends TestCase
 {
-    public function testPlatiniumPushNotification()
+    public function testPlatiniumPushNotification(): void
     {
         $ppn = new PlatiniumPushNotification(
             "This is a push message",

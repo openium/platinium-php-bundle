@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -39,10 +38,6 @@ class PlatiniumParameterBagService
 
     /**
      * PlatiniumParameterBagService constructor.
-     *
-     * @param string $env
-     * @param string $tokenDev
-     * @param string $tokenProd
      */
     public function __construct(string $env, string $tokenDev, string $tokenProd)
     {
@@ -58,8 +53,7 @@ class PlatiniumParameterBagService
      * @param PlatiniumPushNotification $notification
      *
      * @throws InvalidPushGeolocationConfigurationException
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function createPushParam(
         PlatiniumPushInformation $pushInformation,
@@ -73,10 +67,10 @@ class PlatiniumParameterBagService
         if ($pushInformation->isLangNotIn()) {
             $paramsBag['api_notify[langNotIn]'] = $pushInformation->isLangNotIn();
         }
-        if (count($pushInformation->getGroups()) > 0) {
+        if ($pushInformation->getGroups() !== []) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());
         }
-        if (count($pushInformation->getLangs()) > 0) {
+        if ($pushInformation->getLangs() !== []) {
             $paramsBag['api_notify[langs]'] = json_encode($pushInformation->getLangs());
         }
         if ($pushInformation->isGeolocated()) {

@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class ConfigurationTest extends TestCase
 {
-    public function testConfiguration()
+    public function testConfiguration(): void
     {
         $configuration = new Configuration();
         $tree = $configuration->getConfigTreeBuilder();
