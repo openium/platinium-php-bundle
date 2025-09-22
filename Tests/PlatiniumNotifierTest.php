@@ -45,6 +45,7 @@ class PlatiniumNotifierTest extends TestCase
                 'You need to defined server config to execute this test'
             );
         }
+
         $signatureService = new PlatiniumSignatureService(self::$apiServerId, self::$apiServerKey);
         $client = new PlatiniumClient('https://platinium.openium.fr', $signatureService);
         $parameterBagService = new PlatiniumParameterBagService(

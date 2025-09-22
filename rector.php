@@ -12,12 +12,13 @@ return RectorConfig::configure()
         __DIR__ . '/Exception',
         __DIR__ . '/Service',
         __DIR__ . '/Tests',
+        __DIR__ . '/*.php',
     ])
     // uncomment to reach your current PHP version
-    ->withPhp71Sets()
+    ->withPhp72Sets()
     ->withPreparedSets(true, true, true)
     ->withAttributesSets(true)
     ->withSets([
-        SymfonySetList::SYMFONY_40,
+        SymfonySetList::SYMFONY_41,
     ])
     ->withTypeCoverageLevel(0);

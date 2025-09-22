@@ -18,23 +18,12 @@ namespace Openium\PlatiniumBundle\Exception;
  */
 class PushException extends \Exception
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public const DEFAULT_MESSAGE = 'Push not sent';
 
-    /**
-     * @var int
-     */
+    /** @var int */
     public const DEFAULT_CODE = 1612012001;
 
-    /**
-     * LunaException constructor.
-     *
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     */
     public function __construct(
         string $message = self::DEFAULT_MESSAGE,
         int $code = self::DEFAULT_CODE,

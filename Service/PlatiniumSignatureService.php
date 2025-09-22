@@ -19,19 +19,12 @@ class PlatiniumSignatureService
 {
     protected const HTTP_VERB = 'POST';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $apiServerId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $apiServerKey;
 
-    /**
-     * PlatiniumSignatureService constructor.
-     */
     public function __construct(string $apiServerId, string $apiServerKey)
     {
         $this->apiServerId = $apiServerId;
@@ -42,7 +35,6 @@ class PlatiniumSignatureService
      * createServerSignature
      * Create a valid signature for a url and params
      *
-     * @param string $url
      * @param array<string, mixed> $params
      *
      * @return string[]

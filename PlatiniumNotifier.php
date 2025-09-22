@@ -25,33 +25,20 @@ use Openium\PlatiniumBundle\Service\PlatiniumParameterBagService;
  */
 class PlatiniumNotifier
 {
-    /**
-     * @var PlatiniumClient
-     */
+    /** @var PlatiniumClient */
     protected $client;
 
-    /**
-     * @var PlatiniumParameterBagService
-     */
+    /** @var PlatiniumParameterBagService */
     protected $platiniumParameterBagService;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $notifyPath;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $subscribedPath;
 
     /**
      * PlatiniumNotifier constructor.
-     *
-     * @param PlatiniumClient $platiniumClient
-     * @param PlatiniumParameterBagService $platiniumParameterBagService
-     * @param string $notifyPath
-     * @param string $subscribedPath
      */
     public function __construct(
         PlatiniumClient $platiniumClient,
@@ -73,16 +60,12 @@ class PlatiniumNotifier
      * if you want geolocated push you have to defined all of $latitude, $longitude, $tolerance, $radius
      *
      * @param string $message the message to push
-     * @param array $groups notification groups
-     * @param array $langs notification langs
-     * @param bool $langNotIn
+     * @param string[] $groups notification groups
+     * @param string[] $langs notification langs
      * @param float|null $latitude for geolocated push
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
      * @param int|null $radius for geolocated push
-     * @param array $paramsBag
-     * @param int $badgeValue
-     * @param bool $newsStand
      * @param string|null $sound
      *
      * @throws InvalidPushGeolocationConfigurationException if geolocation parameters are incorrect
@@ -107,6 +90,7 @@ class PlatiniumNotifier
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
+
         $notification = new PlatiniumPushNotification($message, $paramsBag, $badgeValue, $newsStand, $sound);
         $parameterBag = $this->platiniumParameterBagService->createPushParam($notificationInformation, $notification);
         $response = $this->client->send($this->notifyPath, $parameterBag);
@@ -120,16 +104,13 @@ class PlatiniumNotifier
      *
      * get number of subscriber
      *
-     * @param array $groups notification groups
-     * @param array $langs notification langs
-     * @param bool $langNotIn
+     * @param string[] $groups notification groups
+     * @param string[] $langs notification langs
      * @param float|null $latitude for geolocated push
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
      * @param int|null $radius for geolocated push
-     *
      * @throws InvalidPushGeolocationConfigurationException
-     * @return int
      */
     public function subscribed(
         array $groups = [],
@@ -144,26 +125,19 @@ class PlatiniumNotifier
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
+
         $notification = new PlatiniumPushNotification();
         $parameterBag = $this->platiniumParameterBagService->createPushParam($notificationInformation, $notification);
         $response = $this->client->send($this->subscribedPath, $parameterBag);
         $content = json_decode($response->getResult(), true);
-        if (array_key_exists('result', $content)) {
-            $count = $content['result'];
-        } else {
-            $count = 0;
-        }
-        return $count;
+
+        return array_key_exists('result', $content) ? $content['result'] : 0;
     }
 
     /**
      * verifyResponse
      *
-     * @param PlatiniumPushResponse $response
-     *
      * @throws PushException
-     *
-     * @return bool
      */
     public function verifyResponse(PlatiniumPushResponse $response): bool
     {
@@ -171,10 +145,12 @@ class PlatiniumNotifier
             $errorMessage = sprintf('Status: %s\nResult: %s', $response->getStatus(), $response->getResult());
             throw new PushException($errorMessage);
         }
+
         $data = json_decode($response->getResult());
         if (is_null($data) || empty($data)) {
             throw new PushException('Push Send Failed : JSON Parse Failed.');
         }
+
         $responseKeys = [
             'id',
             'is_dev',
@@ -192,6 +168,7 @@ class PlatiniumNotifier
                 throw new PushException($errorMessage);
             }
         }
+
         return true;
     }
 }

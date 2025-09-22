@@ -58,8 +58,6 @@ class PlatiniumPushNotification
      *
      * @param string|null $message
      * @param array<string, string> $paramsBag
-     * @param int $badgeValue
-     * @param bool $newsStand
      * @param string|null $sound
      */
     public function __construct(
@@ -85,15 +83,19 @@ class PlatiniumPushNotification
         if (!empty($this->message)) {
             $jsonArray['message'] = $this->message;
         }
+
         if (!empty($this->sound)) {
             $jsonArray['sound'] = $this->sound;
         }
+
         if (!empty($this->badgeValue)) {
             $jsonArray['badge'] = $this->badgeValue;
         }
+
         if (!empty($this->paramsBag)) {
             $jsonArray['paramsbag'] = $this->paramsBag;
         }
+
         return sprintf('[%s]', json_encode($jsonArray));
     }
 
@@ -188,8 +190,6 @@ class PlatiniumPushNotification
      * Setter for paramsBag
      *
      * @param array<string, string> $paramsBag
-     *
-     * @return PlatiniumPushNotification
      */
     public function setParamsBag(array $paramsBag): self
     {

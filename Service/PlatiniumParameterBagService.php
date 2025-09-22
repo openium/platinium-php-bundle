@@ -21,24 +21,15 @@ use Openium\PlatiniumBundle\Entity\PlatiniumPushNotification;
  */
 class PlatiniumParameterBagService
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $env;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $tokenDev;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $tokenProd;
 
-    /**
-     * PlatiniumParameterBagService constructor.
-     */
     public function __construct(string $env, string $tokenDev, string $tokenProd)
     {
         $this->env = $env;
@@ -48,9 +39,6 @@ class PlatiniumParameterBagService
 
     /**
      * createPushParam
-     *
-     * @param PlatiniumPushInformation $pushInformation
-     * @param PlatiniumPushNotification $notification
      *
      * @throws InvalidPushGeolocationConfigurationException
      * @return array<string, mixed>
@@ -67,12 +55,15 @@ class PlatiniumParameterBagService
         if ($pushInformation->isLangNotIn()) {
             $paramsBag['api_notify[langNotIn]'] = $pushInformation->isLangNotIn();
         }
+
         if ($pushInformation->getGroups() !== []) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());
         }
+
         if ($pushInformation->getLangs() !== []) {
             $paramsBag['api_notify[langs]'] = json_encode($pushInformation->getLangs());
         }
+
         if ($pushInformation->isGeolocated()) {
             if ($pushInformation->isValidGeolocation()) {
                 $paramsBag['api_notify[latitude]'] = $pushInformation->getLatitude();
@@ -83,6 +74,7 @@ class PlatiniumParameterBagService
                 throw new InvalidPushGeolocationConfigurationException();
             }
         }
+
         return $paramsBag;
     }
 }

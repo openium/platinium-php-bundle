@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -23,27 +22,20 @@ class PlatiniumClient
 {
     // platinium status code header name
     private const PLATINIUM_STATUS_CODE_HEADER = 'X-Platinium-Status-Code';
+
     // alternative status code header name (without upper letter)
     private const PLATINIUM_STATUS_CODE_HEADER_ALT = 'x-platinium-status-code';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $serverUrl;
 
-    /**
-     * @var PlatiniumSignatureService
-     */
+    /** @var PlatiniumSignatureService */
     private $platiniumSignatureService;
 
-    /**
-     * PlatiniumClientService constructor.
-     *
-     * @param string $serverUrl
-     * @param PlatiniumSignatureService $platiniumSignatureService
-     */
-    public function __construct(string $serverUrl, PlatiniumSignatureService $platiniumSignatureService)
-    {
+    public function __construct(
+        string $serverUrl,
+        PlatiniumSignatureService $platiniumSignatureService
+    ) {
         $this->platiniumSignatureService = $platiniumSignatureService;
         $this->serverUrl = $serverUrl;
     }
@@ -51,14 +43,15 @@ class PlatiniumClient
     /**
      * send
      *
-     * @param string $path
-     * @param array $paramsBag
+     * @param array<string, string> $paramsBag
      *
-     * @return PlatiniumPushResponse
      */
     public function send(string $path, array $paramsBag): PlatiniumPushResponse
     {
-        $requestHeaders = $this->platiniumSignatureService->createServerSignature($path, $paramsBag);
+        $requestHeaders = $this->platiniumSignatureService->createServerSignature(
+            $path,
+            $paramsBag
+        );
         $fullURL = $this->serverUrl . $path;
         $params_string = str_replace('+', '%20', http_build_query($paramsBag));
         $ch = curl_init();
@@ -80,17 +73,24 @@ class PlatiniumClient
                 $responseHeaders = $this->parseHttpHeaders($stringResponseHeader);
                 if (array_key_exists(self::PLATINIUM_STATUS_CODE_HEADER, $responseHeaders)) {
                     $httpStatusCode = $responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER];
-                } elseif (array_key_exists(self::PLATINIUM_STATUS_CODE_HEADER_ALT, $responseHeaders)) {
+                } elseif (
+                    array_key_exists(
+                        self::PLATINIUM_STATUS_CODE_HEADER_ALT,
+                        $responseHeaders
+                    )
+                ) {
                     $httpStatusCode = $responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER_ALT];
                 }
+
                 $result = substr($response, $responseHeaderSize);
             } else {
-                $result = "HTTP Code : {$httpStatusCode}";
+                $result = 'HTTP Code : ' . $httpStatusCode;
             }
         } else {
             $result = 'CURL error : ' . curl_error($ch);
             $httpStatusCode = -1;
         }
+
         curl_close($ch);
         return new PlatiniumPushResponse($httpStatusCode, $result);
     }
@@ -99,14 +99,13 @@ class PlatiniumClient
      * parseHttpHeaders
      * transform string headers to ["key" => "value"] array
      *
-     * @param string $headers
-     *
-     * @return array
+     * @return array<string, string>
      */
-    public function parseHttpHeaders(string $headers)
+    public function parseHttpHeaders(string $headers): array
     {
         $headers = str_replace("\r", "", $headers);
         $headers = explode("\n", $headers);
+
         $headerData = [];
         foreach ($headers as $value) {
             $header = explode(":", $value, 2);
@@ -116,6 +115,7 @@ class PlatiniumClient
                 $headerData[trim($header[0])] = trim($header[1]);
             }
         }
+
         return $headerData;
     }
 }

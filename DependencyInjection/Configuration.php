@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Version 7.1, 7.2
  *
@@ -16,7 +15,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
- *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/configuration.html}
  */
 class Configuration implements ConfigurationInterface
@@ -26,8 +24,6 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('openium_platinium');
-        return $treeBuilder;
+        return new TreeBuilder('openium_platinium');
     }
 }

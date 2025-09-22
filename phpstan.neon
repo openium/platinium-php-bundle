@@ -1,5 +1,6 @@
 parameters:
     level: max
+    phpVersion: 70200 # PHP 7.2
     paths:
         - DependencyInjection
         - Entity

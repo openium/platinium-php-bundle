@@ -50,6 +50,7 @@ class PlatiniumParameterBagServiceTest extends TestCase
         $tokenProd = 'MockProdToken';
         $ppi = new PlatiniumPushInformation(['grp1'], ['fr'], true);
         $ppi->setGeolocation(1.15, 2.16, 50, 500);
+
         $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $result = $ppbs->createPushParam($ppi, $ppn);

@@ -23,10 +23,8 @@ class PlatiniumBundle extends Bundle
 {
     /**
      * getContainerExtension
-     *
-     * @return PlatiniumExtension
      */
-    public function getContainerExtension()
+    public function getContainerExtension(): PlatiniumExtension
     {
         return new PlatiniumExtension();
     }
