@@ -12,7 +12,7 @@
 namespace Openium\PlatiniumBundle\Tests\Entity;
 
 use Openium\PlatiniumBundle\Entity\PlatiniumPushInformation;
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PlatiniumPushInformationTest

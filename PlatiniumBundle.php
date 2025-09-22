@@ -12,6 +12,7 @@
 namespace Openium\PlatiniumBundle;
 
 use Openium\PlatiniumBundle\DependencyInjection\PlatiniumExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -21,10 +22,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class PlatiniumBundle extends Bundle
 {
-    /**
-     * getContainerExtension
-     */
-    public function getContainerExtension(): PlatiniumExtension
+    public function getContainerExtension(): ?ExtensionInterface
     {
         return new PlatiniumExtension();
     }

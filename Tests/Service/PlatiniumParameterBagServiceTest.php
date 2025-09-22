@@ -14,7 +14,7 @@ use Openium\PlatiniumBundle\Entity\PlatiniumPushInformation;
 use Openium\PlatiniumBundle\Entity\PlatiniumPushNotification;
 use Openium\PlatiniumBundle\Exception\InvalidPushGeolocationConfigurationException;
 use Openium\PlatiniumBundle\Service\PlatiniumParameterBagService;
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PlatiniumParameterBagServiceTest

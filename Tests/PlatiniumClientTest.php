@@ -13,7 +13,7 @@ namespace Openium\PlatiniumBundle\Tests;
 
 use Openium\PlatiniumBundle\PlatiniumClient;
 use Openium\PlatiniumBundle\Service\PlatiniumSignatureService;
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PlatiniumClientTest

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\Set\SymfonySetList;
 
 return RectorConfig::configure()
@@ -16,9 +17,11 @@ return RectorConfig::configure()
     ])
     // uncomment to reach your current PHP version
     ->withPhp72Sets()
-    ->withPreparedSets(true, true, true)
     ->withAttributesSets(true)
     ->withSets([
-        SymfonySetList::SYMFONY_41,
+        SymfonySetList::SYMFONY_44,
+        SetList::DEAD_CODE,
+        SetList::CODE_QUALITY,
+        SetList::CODING_STYLE
     ])
     ->withTypeCoverageLevel(0);
