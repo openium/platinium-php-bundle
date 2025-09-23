@@ -19,7 +19,7 @@ return RectorConfig::configure()
     ->withPhp72Sets()
     ->withAttributesSets(true)
     ->withSets([
-        SymfonySetList::SYMFONY_51,
+        SymfonySetList::SYMFONY_52,
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE
