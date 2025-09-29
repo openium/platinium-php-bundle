@@ -1,14 +1,5 @@
 <?php
 
-/**
- * PHP Version 7.1, 7.2
- *
- * @package  Openium\PlatiniumBundle\Tests\Entity
- * @author   Openium <contact@openium.fr>
- * @license  Openium All right reserved
- * @link     https://www.openium.fr/
- */
-
 namespace Openium\PlatiniumBundle\Tests\Entity;
 
 use Openium\PlatiniumBundle\Entity\PlatiniumPushResponse;

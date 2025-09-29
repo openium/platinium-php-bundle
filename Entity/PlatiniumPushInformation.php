@@ -1,12 +1,4 @@
 <?php
-/**
- * PHP Version 7.1, 7.2
- *
- * @package  Openium\PlatiniumBundle\Entity
- * @author   Openium <contact@openium.fr>
- * @license  Openium All right reserved
- * @link     https://www.openium.fr/
- */
 
 namespace Openium\PlatiniumBundle\Entity;
 
@@ -22,7 +14,7 @@ class PlatiniumPushInformation
      *
      * @var string[]
      */
-    protected $groups = [];
+    protected array $groups = [];
 
     /**
      * List of Langs
@@ -30,50 +22,38 @@ class PlatiniumPushInformation
      *
      * @var string[]
      */
-    protected $langs = [];
+    protected array $langs = [];
 
     /**
      * Inverse list of lang
      * (in platinium : notification.lang not in [...])
-     *
-     * @var boolean
      */
-    protected $langNotIn = false;
+    protected bool $langNotIn = false;
 
     /**
      * Is geolocation config is set
-     *
-     * @var bool
      */
-    private $isGeolocated = false;
+    private bool $isGeolocated = false;
 
     /**
      * Latitude for geolocation
-     *
-     * @var float|null
      */
-    private $latitude;
+    private ?float $latitude = null;
 
     /**
      * Longitude for geolocation
-     *
-     * @var float|null
      */
-    private $longitude;
+    private ?float $longitude = null;
 
     /**
      * Tolerance for geolocation
-     *
-     * @var int|null
      */
-    private $tolerance;
+    private ?int $tolerance = null;
 
     /**
      * Radius for geolocation
-     *
-     * @var int|null
      */
-    private $radius;
+    private ?int $radius = null;
 
     /**
      * PlatiniumPushInformation constructor.
@@ -130,66 +110,42 @@ class PlatiniumPushInformation
         return $this;
     }
 
-    /**
-     * Getter for latitude
-     */
     public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    /**
-     * Getter for longitude
-     */
     public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    /**
-     * Getter for tolerance
-     */
     public function getTolerance(): ?int
     {
         return $this->tolerance;
     }
 
-    /**
-     * Getter for radius
-     */
     public function getRadius(): ?int
     {
         return $this->radius;
     }
 
-    /**
-     * Getter for isGeolocated
-     */
     public function isGeolocated(): bool
     {
         return $this->isGeolocated;
     }
 
-    /**
-     * Getter for langNotIn
-     */
     public function isLangNotIn(): bool
     {
         return $this->langNotIn;
     }
 
-    /**
-     * Setter for langNotIn
-     */
     public function setLangNotIn(bool $langNotIn): self
     {
         $this->langNotIn = $langNotIn;
         return $this;
     }
 
-    /**
-     * setGeolocation
-     */
     public function setGeolocation(
         float $latitude,
         float $longitude,
@@ -199,32 +155,24 @@ class PlatiniumPushInformation
         if (!empty($latitude)) {
             $this->latitude = $latitude;
         }
-
         if (!empty($longitude)) {
             $this->longitude = $longitude;
         }
-
         if ($tolerance !== 0) {
             $this->tolerance = $tolerance;
         }
-
         if ($radius !== 0) {
             $this->radius = $radius;
         }
-
         $this->isGeolocated = true;
         return $this;
     }
 
-    /**
-     * isValidGeolocation
-     */
     public function isValidGeolocation(): bool
     {
         if (!$this->isGeolocated) {
             return true;
         }
-
         return (
             $this->radius !== null
             && $this->latitude !== null

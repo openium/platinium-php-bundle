@@ -1,14 +1,5 @@
 <?php
 
-/**
- * PHP Version 7.1, 7.2
- *
- * @package  Openium\PlatiniumBundle
- * @author   Openium <contact@openium.fr>
- * @license  Openium All right reserved
- * @link     https://www.openium.fr/
- */
-
 namespace Openium\PlatiniumBundle\DependencyInjection;
 
 use Openium\PlatiniumBundle\PlatiniumNotifier;
@@ -31,14 +22,15 @@ class PlatiniumExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $configuration =  $this->getConfiguration($configs, $container);
+        $configuration = $this->getConfiguration($configs, $container);
         if ($configuration instanceof ConfigurationInterface) {
             $this->processConfiguration($configuration, $configs);
         }
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__ . '/../Resources/config')
+        );
         $loader->load('services.yml');
-
         $container->setAlias(
             PlatiniumNotifier::class,
             new Alias('openium_platinium.notifier')

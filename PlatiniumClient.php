@@ -1,12 +1,4 @@
 <?php
-/**
- * PHP Version 7.1, 7.2
- *
- * @package  Openium\PlatiniumBundle
- * @author   Openium <contact@openium.fr>
- * @license  Openium All right reserved
- * @link     https://www.openium.fr/
- */
 
 namespace Openium\PlatiniumBundle;
 
@@ -26,25 +18,16 @@ class PlatiniumClient
     // alternative status code header name (without upper letter)
     private const PLATINIUM_STATUS_CODE_HEADER_ALT = 'x-platinium-status-code';
 
-    /** @var string */
-    protected $serverUrl;
-
-    /** @var PlatiniumSignatureService */
-    private $platiniumSignatureService;
-
     public function __construct(
-        string $serverUrl,
-        PlatiniumSignatureService $platiniumSignatureService
+        private readonly string $serverUrl,
+        private readonly PlatiniumSignatureService $platiniumSignatureService
     ) {
-        $this->platiniumSignatureService = $platiniumSignatureService;
-        $this->serverUrl = $serverUrl;
     }
 
     /**
      * send
      *
      * @param array<string, string> $paramsBag
-     *
      */
     public function send(string $path, array $paramsBag): PlatiniumPushResponse
     {

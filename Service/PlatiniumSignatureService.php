@@ -1,12 +1,4 @@
 <?php
-/**
- * PHP Version 7.1, 7.2
- *
- * @package  Openium\PlatiniumBundle\Service
- * @author   Openium <contact@openium.fr>
- * @license  Openium All right reserved
- * @link     https://www.openium.fr/
- */
 
 namespace Openium\PlatiniumBundle\Service;
 
@@ -19,16 +11,10 @@ class PlatiniumSignatureService
 {
     protected const HTTP_VERB = 'POST';
 
-    /** @var string */
-    protected $apiServerId;
-
-    /** @var string */
-    protected $apiServerKey;
-
-    public function __construct(string $apiServerId, string $apiServerKey)
-    {
-        $this->apiServerId = $apiServerId;
-        $this->apiServerKey = $apiServerKey;
+    public function __construct(
+        private readonly string $apiServerId,
+        private readonly string $apiServerKey
+    ) {
     }
 
     /**
@@ -41,7 +27,7 @@ class PlatiniumSignatureService
      */
     public function createServerSignature(string $url, array $params = []): array
     {
-        $timestamp = strval(round(microtime(true) * 1000));
+        $timestamp = (string) (int) (microtime(true) * 1000);
         $paramString = ($params === [])
             ? ''
             : str_replace('+', '%20', http_build_query($params));
