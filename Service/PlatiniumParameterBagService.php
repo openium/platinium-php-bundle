@@ -23,7 +23,6 @@ class PlatiniumParameterBagService
     /**
      * createPushParam
      *
-     * @throws InvalidPushGeolocationConfigurationException
      * @return array<string, mixed>
      */
     public function createPushParam(
@@ -41,17 +40,15 @@ class PlatiniumParameterBagService
         if ($pushInformation->getGroups() !== []) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());
         }
-        if ($pushInformation->getLangs() !== []) {
-            $paramsBag['api_notify[langs]'] = json_encode($pushInformation->getLangs());
+        if ($pushInformation->getLanguages() !== []) {
+            $paramsBag['api_notify[langs]'] = json_encode($pushInformation->getLanguages());
         }
         if ($pushInformation->isGeolocated()) {
-            if ($pushInformation->isValidGeolocation()) {
-                $paramsBag['api_notify[latitude]'] = $pushInformation->getLatitude();
-                $paramsBag['api_notify[longitude]'] = $pushInformation->getLongitude();
-                $paramsBag['api_notify[radius]'] = $pushInformation->getRadius();
+            $paramsBag['api_notify[latitude]'] = $pushInformation->getLatitude();
+            $paramsBag['api_notify[longitude]'] = $pushInformation->getLongitude();
+            $paramsBag['api_notify[radius]'] = $pushInformation->getRadius();
+            if ($pushInformation->getTolerance() !== null) {
                 $paramsBag['api_notify[tolerance]'] = $pushInformation->getTolerance();
-            } else {
-                throw new InvalidPushGeolocationConfigurationException();
             }
         }
         return $paramsBag;

@@ -49,7 +49,6 @@ class PlatiniumClient
         $response = curl_exec($ch);
         if ($response) {
             $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $result = null;
             if ($httpStatusCode == 200) {
                 $responseHeaderSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
                 $stringResponseHeader = substr($response, 0, $responseHeaderSize);

@@ -64,8 +64,6 @@ class PlatiniumParameterBagServiceTest extends TestCase
 
     public function testCreatePushParamWithInvalidGeolocation(): void
     {
-        self::expectException(InvalidPushGeolocationConfigurationException::class);
-        self::expectExceptionMessage('Invalid push geolocation configuration');
         $env = 'test';
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
@@ -74,9 +72,6 @@ class PlatiniumParameterBagServiceTest extends TestCase
             ->getMock();
         $ppi->expects($this->once())
             ->method('isGeolocated')
-            ->will($this->returnValue(true));
-        $ppi->expects($this->once())
-            ->method('isValidGeolocation')
             ->will($this->returnValue(false));
         $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);

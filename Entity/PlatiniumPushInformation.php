@@ -22,7 +22,7 @@ class PlatiniumPushInformation
      *
      * @var string[]
      */
-    protected array $langs = [];
+    protected array $languages = [];
 
     /**
      * Inverse list of lang
@@ -47,6 +47,8 @@ class PlatiniumPushInformation
 
     /**
      * Tolerance for geolocation
+     * in days
+     * allow to omit users who have not updated their position for more than X days
      */
     private ?int $tolerance = null;
 
@@ -64,7 +66,7 @@ class PlatiniumPushInformation
     public function __construct(array $groups, array $langs, bool $langNotIn = false)
     {
         $this->groups = $groups;
-        $this->langs = $langs;
+        $this->languages = $langs;
         $this->langNotIn = $langNotIn;
     }
 
@@ -94,19 +96,19 @@ class PlatiniumPushInformation
      *
      * @return string[]
      */
-    public function getLangs(): array
+    public function getLanguages(): array
     {
-        return $this->langs;
+        return $this->languages;
     }
 
     /**
      * Setter for langs
      *
-     * @param string[] $langs
+     * @param string[] $languages
      */
-    public function setLangs(array $langs): self
+    public function setLanguages(array $languages): self
     {
-        $this->langs = $langs;
+        $this->languages = $languages;
         return $this;
     }
 
@@ -149,35 +151,18 @@ class PlatiniumPushInformation
     public function setGeolocation(
         float $latitude,
         float $longitude,
-        int $tolerance,
+        ?int $tolerance,
         int $radius
     ): self {
-        if (!empty($latitude)) {
-            $this->latitude = $latitude;
-        }
-        if (!empty($longitude)) {
-            $this->longitude = $longitude;
-        }
-        if ($tolerance !== 0) {
-            $this->tolerance = $tolerance;
-        }
-        if ($radius !== 0) {
-            $this->radius = $radius;
-        }
-        $this->isGeolocated = true;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->tolerance = $tolerance;
+        $this->radius = $radius;
+        $isValidTolerance = $tolerance === null || ($tolerance && $tolerance > 0);
+        $isValid = $isValidTolerance
+            && $radius > 0
+            && !($latitude === 0.0 && $longitude === 0.0);
+        $this->isGeolocated = $isValid;
         return $this;
-    }
-
-    public function isValidGeolocation(): bool
-    {
-        if (!$this->isGeolocated) {
-            return true;
-        }
-        return (
-            $this->radius !== null
-            && $this->latitude !== null
-            && $this->longitude !== null
-            && $this->tolerance !== null
-        );
     }
 }
