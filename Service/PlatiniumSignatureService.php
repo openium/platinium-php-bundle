@@ -2,6 +2,8 @@
 
 namespace Openium\PlatiniumBundle\Service;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class PlatiniumSignatureService
  *
@@ -9,8 +11,6 @@ namespace Openium\PlatiniumBundle\Service;
  */
 class PlatiniumSignatureService
 {
-    protected const HTTP_VERB = 'POST';
-
     public function __construct(
         private readonly string $apiServerId,
         private readonly string $apiServerKey
@@ -23,7 +23,7 @@ class PlatiniumSignatureService
      *
      * @param array<string, mixed> $params
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function createServerSignature(string $url, array $params = []): array
     {
@@ -33,19 +33,20 @@ class PlatiniumSignatureService
             : str_replace('+', '%20', http_build_query($params));
         $stringToSign = sprintf(
             "%s\n%s\n%s\n%s\n%s",
-            self::HTTP_VERB,
+            Request::METHOD_POST,
             $url,
             $paramString,
             $timestamp,
             $this->apiServerKey
         );
         $signature = sha1($stringToSign);
-        $header = sprintf(
-            'x-ws-signature: WS-Signature UUID="%s", Signature="%s", Created="%s"',
-            $this->apiServerId,
-            $signature,
-            $timestamp
-        );
-        return [$header];
+        return [
+            'x-ws-signature' => sprintf(
+                'WS-Signature UUID="%s", Signature="%s", Created="%s"',
+                $this->apiServerId,
+                $signature,
+                $timestamp
+            )
+        ];
     }
 }

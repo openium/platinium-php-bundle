@@ -53,7 +53,7 @@ class PlatiniumNotifier
         array $groups = [],
         array $languages = [],
         bool $langNotIn = false,
-        float $latitude = null,
+        ?float $latitude = null,
         ?float $longitude = null,
         ?int $tolerance = null,
         ?int $radius = null,

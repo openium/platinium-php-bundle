@@ -9,6 +9,7 @@ use Openium\PlatiniumBundle\PlatiniumNotifier;
 use Openium\PlatiniumBundle\Service\PlatiniumParameterBagService;
 use Openium\PlatiniumBundle\Service\PlatiniumSignatureService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class PlatiniumNotifierTest
@@ -23,23 +24,32 @@ class PlatiniumNotifierTest extends TestCase
      */
     public static $apiServerId = "";
 
-    public static $apiServerKey = "";
+    public static string $apiServerKey = "";
 
-    public static $tokenDev = "";
+    public static string $apiUrl = "";
+
+    public static string $tokenDev = "";
 
     // fake token to avoid real push
-    public static $tokenProd = "DontPushInProd";
+    public static string $tokenProd = "DontPushInProd";
+
+    protected static string $apiUrlDev;
 
     private function getRealNotifier(): PlatiniumNotifier
     {
-        if (empty(self::$apiServerId) || empty(self::$apiServerKey) || empty(self::$tokenDev)) {
+        if (
+            empty(self::$apiServerId)
+            || empty(self::$apiServerKey)
+            || empty(self::$tokenDev)
+            || empty(self::$apiUrl)
+        ) {
             $this->markTestSkipped(
                 'You need to defined server config to execute this test'
             );
         }
-
+        $httpClient = $this->createMock(HttpClientInterface::class);
         $signatureService = new PlatiniumSignatureService(self::$apiServerId, self::$apiServerKey);
-        $client = new PlatiniumClient('https://platinium.openium.fr', $signatureService);
+        $client = new PlatiniumClient(self::$apiUrl, $signatureService, $httpClient);
         $parameterBagService = new PlatiniumParameterBagService(
             'test',
             self::$tokenDev,
@@ -55,8 +65,18 @@ class PlatiniumNotifierTest extends TestCase
 
     private function getMockNotifier(): PlatiniumNotifier
     {
+        if (empty(self::$apiUrlDev)) {
+            $this->markTestSkipped(
+                'You need to defined server config to execute this test'
+            );
+        }
         $signatureService = new PlatiniumSignatureService('MockedServerId', 'MockedServerKey');
-        $client = new PlatiniumClient('https://platinium-dev.openium.fr', $signatureService);
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $client = new PlatiniumClient(
+            self::$apiUrlDev,
+            $signatureService,
+            $httpClient
+        );
         $parameterBagService = new PlatiniumParameterBagService(
             'test',
             self::$tokenProd,

@@ -23,8 +23,9 @@ class PlatiniumSignatureServiceTest extends TestCase
         $result = $pss->createServerSignature($url, $params);
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $pattern = "/^x-ws-signature: WS-Signature UUID=\".*\", Signature=\".*\", Created=\"\d*\"$/";
-        $match = preg_match($pattern, $result[0]);
+        self::assertArrayHasKey('x-ws-signature', $result);
+        $pattern = "/^WS-Signature UUID=\".*\", Signature=\".*\", Created=\"\d*\"$/";
+        $match = preg_match($pattern, $result['x-ws-signature']);
         $this->assertEquals(1, $match);
     }
 
@@ -39,8 +40,9 @@ class PlatiniumSignatureServiceTest extends TestCase
         $result = $pss->createServerSignature($url, $params);
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $pattern = "/^x-ws-signature: WS-Signature UUID=\".*\", Signature=\".*\", Created=\"\d*\"$/";
-        $match = preg_match($pattern, $result[0]);
+        self::assertArrayHasKey('x-ws-signature', $result);
+        $pattern = "/^WS-Signature UUID=\".*\", Signature=\".*\", Created=\"\d*\"$/";
+        $match = preg_match($pattern, $result['x-ws-signature']);
         $this->assertEquals(1, $match);
     }
 }
