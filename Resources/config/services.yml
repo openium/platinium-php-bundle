@@ -31,7 +31,7 @@ services:
         arguments:
             - '%openium_platinium.server_url%'
             - '@openium_platinium.signature_service'
-            - '%kernel.environment%'
+            - '@Symfony\Contracts\HttpClient\HttpClientInterface'
         public: false
 
     openium_platinium.notifier:
