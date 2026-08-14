@@ -121,3 +121,13 @@ a real `composer update`). `phpstan.neon` unchanged (PHP floor still 8.2).
 `rector.php` stays on `SymfonySetList::SYMFONY_71`, the latest available in
 the `rector/rector` `^1.2` line - a `SYMFONY_72` set only exists starting
 with Rector 2.x; ran rector anyway, nothing to apply.
+
+### v2.3.0 ###
+
+Update project to Symfony 7.3: bump `symfony/framework-bundle`,
+`symfony/http-client`, `symfony/http-foundation`, `symfony/yaml` and
+`symfony/phpunit-bridge` to `^7.3`. No code changes needed: none of 7.3's
+deprecations touch this bundle's surface (checked against UPGRADE-7.3.md and
+a real `composer update`). `phpstan.neon` unchanged (PHP floor still 8.2).
+`rector.php` still on `SymfonySetList::SYMFONY_71`, same `rector/rector`
+`^1.2` limitation as v2.2.0; ran rector anyway, nothing to apply.
