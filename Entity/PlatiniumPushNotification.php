@@ -43,11 +43,11 @@ class PlatiniumPushNotification
     public function jsonFormat(): string
     {
         $jsonArray = ['newsstand' => $this->isNewsStand() ? 1 : 0];
-        if ($this->message !== null && $this->message !== '' && $this->message !== '0') {
+        if (!in_array($this->message, [null, '', '0'], true)) {
             $jsonArray['message'] = $this->message;
         }
 
-        if ($this->sound !== null && $this->sound !== '' && $this->sound !== '0') {
+        if (!in_array($this->sound, [null, '', '0'], true)) {
             $jsonArray['sound'] = $this->sound;
         }
 

@@ -152,7 +152,7 @@ class PlatiniumPushInformation
         $isValidTolerance = $tolerance === null || ($tolerance && $tolerance > 0);
         $isValid = $isValidTolerance
             && $radius > 0
-            && !($latitude === 0.0 && $longitude === 0.0);
+            && ($latitude !== 0.0 || $longitude !== 0.0);
         $this->isGeolocated = $isValid;
         return $this;
     }
