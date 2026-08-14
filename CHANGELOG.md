@@ -131,3 +131,16 @@ deprecations touch this bundle's surface (checked against UPGRADE-7.3.md and
 a real `composer update`). `phpstan.neon` unchanged (PHP floor still 8.2).
 `rector.php` still on `SymfonySetList::SYMFONY_71`, same `rector/rector`
 `^1.2` limitation as v2.2.0; ran rector anyway, nothing to apply.
+
+### v2.4.0 ###
+
+Update project to Symfony 7.4 (the next LTS release): bump
+`symfony/framework-bundle`, `symfony/http-client`, `symfony/http-foundation`,
+`symfony/yaml` and `symfony/phpunit-bridge` to `^7.4`. No code changes
+needed: none of 7.4's deprecations touch this bundle's surface (checked
+against UPGRADE-7.4.md and a real `composer update`) - notably
+`ExtensionInterface::getXsdValidationBasePath()`/`getNamespace()` are
+deprecated, but `PlatiniumExtension` doesn't override either. `phpstan.neon`
+unchanged (PHP floor still 8.2). `rector.php` still on
+`SymfonySetList::SYMFONY_71`, same `rector/rector` `^1.2` limitation as
+v2.2.0/v2.3.0; ran rector anyway, nothing to apply.
