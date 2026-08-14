@@ -106,4 +106,18 @@ Update project to Symfony 7.1: bump `symfony/framework-bundle`,
 `symfony/phpunit-bridge` to `^7.1`, target `SymfonySetList::SYMFONY_71` in
 rector.php. No code changes needed: none of 7.1's deprecations touch this
 bundle's surface (checked against UPGRADE-7.1.md and a real `composer
-update`).
+update`). Also ran rector with the new rule set applied: promoted
+constructor properties, replaced `empty()` checks with explicit
+type-matching comparisons, and dropped redundant `@param` docblock lines -
+mechanical only, no behavior change.
+
+### v2.2.0 ###
+
+Update project to Symfony 7.2: bump `symfony/framework-bundle`,
+`symfony/http-client`, `symfony/http-foundation`, `symfony/yaml` and
+`symfony/phpunit-bridge` to `^7.2`. No code changes needed: none of 7.2's
+deprecations touch this bundle's surface (checked against UPGRADE-7.2.md and
+a real `composer update`). `phpstan.neon` unchanged (PHP floor still 8.2).
+`rector.php` stays on `SymfonySetList::SYMFONY_71`, the latest available in
+the `rector/rector` `^1.2` line - a `SYMFONY_72` set only exists starting
+with Rector 2.x; ran rector anyway, nothing to apply.
