@@ -82,12 +82,24 @@ migration
 
 ### Unreleased ###
 
-Preparation work for Symfony 7 compatibility (see `SYMFONY_7_UPGRADE_PLAN.md`):
+Fixes uncovered while adding regression coverage ahead of the Symfony 7 update
+below:
 - Fix `Configuration::getConfigTreeBuilder()` missing native `TreeBuilder` return
   type (fatal error as soon as symfony/config enforces it)
 - Add missing `symfony/yaml` dependency, required by `PlatiniumExtension`'s
   `YamlFileLoader` but never declared
-- Fix `phpstan.neon` stale `phpVersion` (was still 7.2) that silently broke static
-  analysis on the PHP 8.1 codebase
 - Add regression tests for `PlatiniumClient`, `PlatiniumExtension`/DI container
   compilation, and `PlatiniumBundle`, previously untested
+
+### v2.0.0 ###
+
+Update project to Symfony 7 and set minimum PHP version to 8.2:
+- `symfony/framework-bundle`, `symfony/http-client`, `symfony/yaml` to `^7.0`
+- Declare `symfony/http-foundation` explicitly (used directly for
+  `Request::METHOD_POST`, previously only available transitively)
+- Drop the stale `ext-curl` requirement, unused since the HttpClient migration
+  (v1.4.2)
+- `PlatiniumExtension` now extends
+  `Symfony\Component\DependencyInjection\Extension\Extension`, since the
+  HttpKernel-namespaced one is deprecated as of Symfony 8.1
+- `phpstan.neon`/`rector.php` updated for PHP 8.2 and the Symfony 7 rule set
