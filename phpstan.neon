@@ -1,9 +1,8 @@
 parameters:
     level: max
-    phpVersion: 80100 # PHP 8.1 (composer.json "php" requirement)
+    phpVersion: 80200 # PHP 8.2 (composer.json "php" requirement)
     paths:
         - DependencyInjection
         - Entity
-        - Exception
         - Exception
         - Service

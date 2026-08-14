@@ -16,10 +16,10 @@ return RectorConfig::configure()
         __DIR__ . '/*.php',
     ])
     // uncomment to reach your current PHP version
-    ->withPhpSets(php81: true)
+    ->withPhpSets(php82: true)
     ->withAttributesSets(true)
     ->withSets([
-        SymfonySetList::SYMFONY_64,
+        SymfonySetList::SYMFONY_70,
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE
