@@ -1,6 +1,6 @@
 parameters:
     level: max
-    phpVersion: 70200 # PHP 7.2
+    phpVersion: 80100 # PHP 8.1 (composer.json "php" requirement)
     paths:
         - DependencyInjection
         - Entity
