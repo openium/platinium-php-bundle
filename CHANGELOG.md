@@ -73,3 +73,21 @@ Fix types and simplify PlatiniumPushInformation. Also make tolerance nullable
 ### v1.4.2 ### 
 
 Use Symfony HttpClient instead of CURL
+
+### v1.4.3 ###
+
+Fix `openium_platinium.client` service argument: it was wrongly wired to
+`%kernel.environment%` instead of `HttpClientInterface` after the v1.4.2 HttpClient
+migration
+
+### Unreleased ###
+
+Preparation work for Symfony 7 compatibility (see `SYMFONY_7_UPGRADE_PLAN.md`):
+- Fix `Configuration::getConfigTreeBuilder()` missing native `TreeBuilder` return
+  type (fatal error as soon as symfony/config enforces it)
+- Add missing `symfony/yaml` dependency, required by `PlatiniumExtension`'s
+  `YamlFileLoader` but never declared
+- Fix `phpstan.neon` stale `phpVersion` (was still 7.2) that silently broke static
+  analysis on the PHP 8.1 codebase
+- Add regression tests for `PlatiniumClient`, `PlatiniumExtension`/DI container
+  compilation, and `PlatiniumBundle`, previously untested
