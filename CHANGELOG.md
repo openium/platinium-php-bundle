@@ -80,17 +80,6 @@ Fix `openium_platinium.client` service argument: it was wrongly wired to
 `%kernel.environment%` instead of `HttpClientInterface` after the v1.4.2 HttpClient
 migration
 
-### Unreleased ###
-
-Fixes uncovered while adding regression coverage ahead of the Symfony 7 update
-below:
-- Fix `Configuration::getConfigTreeBuilder()` missing native `TreeBuilder` return
-  type (fatal error as soon as symfony/config enforces it)
-- Add missing `symfony/yaml` dependency, required by `PlatiniumExtension`'s
-  `YamlFileLoader` but never declared
-- Add regression tests for `PlatiniumClient`, `PlatiniumExtension`/DI container
-  compilation, and `PlatiniumBundle`, previously untested
-
 ### v2.0.0 ###
 
 Update project to Symfony 7 and set minimum PHP version to 8.2:
@@ -103,3 +92,18 @@ Update project to Symfony 7 and set minimum PHP version to 8.2:
   `Symfony\Component\DependencyInjection\Extension\Extension`, since the
   HttpKernel-namespaced one is deprecated as of Symfony 8.1
 - `phpstan.neon`/`rector.php` updated for PHP 8.2 and the Symfony 7 rule set
+- Fixed along the way, found via new regression coverage: `Configuration::getConfigTreeBuilder()`
+  missing its native `TreeBuilder` return type (fatal error as soon as
+  symfony/config enforces it), and a missing `symfony/yaml` dependency
+  required by `PlatiniumExtension`'s `YamlFileLoader` but never declared
+- Added regression tests for `PlatiniumClient`, `PlatiniumExtension`/DI
+  container compilation, and `PlatiniumBundle`, previously untested
+
+### v2.1.0 ###
+
+Update project to Symfony 7.1: bump `symfony/framework-bundle`,
+`symfony/http-client`, `symfony/http-foundation`, `symfony/yaml` and
+`symfony/phpunit-bridge` to `^7.1`, target `SymfonySetList::SYMFONY_71` in
+rector.php. No code changes needed: none of 7.1's deprecations touch this
+bundle's surface (checked against UPGRADE-7.1.md and a real `composer
+update`).
