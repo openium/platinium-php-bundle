@@ -23,6 +23,7 @@ class PlatiniumPushInformationTest extends TestCase
         $this->assertEquals(50, $ppi->getTolerance());
         $this->assertEquals(500, $ppi->getRadius());
     }
+
     public function testSetGeolocationWithNullTolerance()
     {
         $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"], true);
@@ -33,6 +34,7 @@ class PlatiniumPushInformationTest extends TestCase
         $this->assertEquals(null, $ppi->getTolerance());
         $this->assertEquals(500, $ppi->getRadius());
     }
+
     public function testSetGeolocationWithWrongRadius()
     {
         $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"], true);
@@ -43,6 +45,7 @@ class PlatiniumPushInformationTest extends TestCase
         $this->assertEquals(50, $ppi->getTolerance());
         $this->assertEquals(-400, $ppi->getRadius());
     }
+
     public function testSetGeolocationWithWrongLatLon()
     {
         $ppi = new PlatiniumPushInformation(["grp1", "grp2"], ["fr", "en"], true);

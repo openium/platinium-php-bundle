@@ -64,7 +64,7 @@ class PlatiniumExtensionTest extends TestCase
         ];
 
         foreach ($expectedDefinitions as $serviceId => $expectedClass) {
-            $this->assertTrue($container->hasDefinition($serviceId), "Missing service: $serviceId");
+            $this->assertTrue($container->hasDefinition($serviceId), 'Missing service: ' . $serviceId);
             $this->assertSame($expectedClass, $container->getDefinition($serviceId)->getClass());
         }
     }

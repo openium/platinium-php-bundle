@@ -11,6 +11,7 @@ class InvalidPushGeolocationConfigurationException extends \Exception
 {
     /** @var string */
     public const DEFAULT_MESSAGE = 'Invalid push geolocation configuration';
+
     /** @var int */
     public const DEFAULT_CODE = 1612012002;
 

@@ -10,27 +10,6 @@ namespace Openium\PlatiniumBundle\Entity;
 class PlatiniumPushInformation
 {
     /**
-     * List of push group
-     *
-     * @var string[]
-     */
-    protected array $groups = [];
-
-    /**
-     * List of Langs
-     * (in platinium : notification.lang in [...])
-     *
-     * @var string[]
-     */
-    protected array $languages = [];
-
-    /**
-     * Inverse list of lang
-     * (in platinium : notification.lang not in [...])
-     */
-    protected bool $langNotIn = false;
-
-    /**
      * Is geolocation config is set
      */
     private bool $isGeolocated = false;
@@ -61,13 +40,25 @@ class PlatiniumPushInformation
      * PlatiniumPushInformation constructor.
      *
      * @param string[] $groups
-     * @param string[] $langs
+     * @param string[] $languages
      */
-    public function __construct(array $groups, array $langs, bool $langNotIn = false)
+    public function __construct(
+        /**
+         * List of push group
+         */
+        protected array $groups,
+        /**
+         * List of Langs
+         * (in platinium : notification.lang in [...])
+         */
+        protected array $languages,
+        /**
+         * Inverse list of lang
+         * (in platinium : notification.lang not in [...])
+         */
+        protected bool $langNotIn = false
+    )
     {
-        $this->groups = $groups;
-        $this->languages = $langs;
-        $this->langNotIn = $langNotIn;
     }
 
     /**

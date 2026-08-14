@@ -39,14 +39,15 @@ class PlatiniumNotifierTest extends TestCase
     {
         if (
             empty(self::$apiServerId)
-            || empty(self::$apiServerKey)
-            || empty(self::$tokenDev)
-            || empty(self::$apiUrl)
+            || (self::$apiServerKey === '' || self::$apiServerKey === '0')
+            || (self::$tokenDev === '' || self::$tokenDev === '0')
+            || (self::$apiUrl === '' || self::$apiUrl === '0')
         ) {
             $this->markTestSkipped(
                 'You need to defined server config to execute this test'
             );
         }
+
         $httpClient = $this->createMock(HttpClientInterface::class);
         $signatureService = new PlatiniumSignatureService(self::$apiServerId, self::$apiServerKey);
         $client = new PlatiniumClient(self::$apiUrl, $signatureService, $httpClient);
@@ -65,11 +66,12 @@ class PlatiniumNotifierTest extends TestCase
 
     private function getMockNotifier(): PlatiniumNotifier
     {
-        if (empty(self::$apiUrlDev)) {
+        if (!isset(self::$apiUrlDev) || (self::$apiUrlDev === '' || self::$apiUrlDev === '0')) {
             $this->markTestSkipped(
                 'You need to defined server config to execute this test'
             );
         }
+
         $signatureService = new PlatiniumSignatureService('MockedServerId', 'MockedServerKey');
         $httpClient = $this->createMock(HttpClientInterface::class);
         $client = new PlatiniumClient(

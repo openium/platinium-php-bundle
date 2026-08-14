@@ -35,15 +35,11 @@ class PlatiniumNotifier
      * @param string $message the message to push
      * @param string[] $groups notification groups
      * @param string[] $languages notification langs
-     * @param bool $langNotIn
      * @param float|null $latitude for geolocated push
      * @param float|null $longitude for geolocated push
      * @param int|null $tolerance for geolocated push
      * @param int|null $radius for geolocated push
      * @param array<string, string> $paramsBag
-     * @param int $badgeValue
-     * @param bool $newsStand
-     * @param string|null $sound
      *
      * @throws PushException if push is not sent
      * @return bool true => push is sent to platinium
@@ -66,6 +62,7 @@ class PlatiniumNotifier
         if ($latitude && $longitude && $radius && $tolerance) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
+
         $notification = new PlatiniumPushNotification(
             $message,
             $paramsBag,
@@ -112,6 +109,7 @@ class PlatiniumNotifier
         ) {
             $notificationInformation->setGeolocation($latitude, $longitude, $tolerance, $radius);
         }
+
         $notification = new PlatiniumPushNotification();
         $parameterBag = $this->platiniumParameterBagService->createPushParam(
             $notificationInformation,
@@ -137,10 +135,12 @@ class PlatiniumNotifier
             );
             throw new PushException($errorMessage);
         }
+
         $data = json_decode($response->getResult(), true);
         if ($data === null) {
             throw new PushException('Push Send Failed : JSON Parse Failed.');
         }
+
         $responseKeys = [
             'id',
             'is_dev',
@@ -158,6 +158,7 @@ class PlatiniumNotifier
                 throw new PushException($errorMessage);
             }
         }
+
         return true;
     }
 }
