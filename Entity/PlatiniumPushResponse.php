@@ -11,20 +11,17 @@ class PlatiniumPushResponse
 {
     public const STATUS_SUCCESS = 0;
 
-    /**
-     * The status returned by the query
-     */
-    protected int $status;
-
-    /**
-     * Raw result of the query
-     */
-    protected string $result;
-
-    public function __construct(int $status, string $result)
+    public function __construct(
+        /**
+         * The status returned by the query
+         */
+        protected int $status,
+        /**
+         * Raw result of the query
+         */
+        protected string $result
+    )
     {
-        $this->status = $status;
-        $this->result = $result;
     }
 
     public function getStatus(): int

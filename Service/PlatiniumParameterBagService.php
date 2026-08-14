@@ -37,12 +37,15 @@ class PlatiniumParameterBagService
         if ($pushInformation->isLangNotIn()) {
             $paramsBag['api_notify[langNotIn]'] = $pushInformation->isLangNotIn();
         }
+
         if ($pushInformation->getGroups() !== []) {
             $paramsBag['api_notify[idsGroups]'] = json_encode($pushInformation->getGroups());
         }
+
         if ($pushInformation->getLanguages() !== []) {
             $paramsBag['api_notify[langs]'] = json_encode($pushInformation->getLanguages());
         }
+
         if ($pushInformation->isGeolocated()) {
             $paramsBag['api_notify[latitude]'] = $pushInformation->getLatitude();
             $paramsBag['api_notify[longitude]'] = $pushInformation->getLongitude();
@@ -51,6 +54,7 @@ class PlatiniumParameterBagService
                 $paramsBag['api_notify[tolerance]'] = $pushInformation->getTolerance();
             }
         }
+
         return $paramsBag;
     }
 }

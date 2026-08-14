@@ -58,6 +58,7 @@ class PlatiniumClient
                 if (isset($responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER][0])) {
                     $httpStatusCode = $responseHeaders[self::PLATINIUM_STATUS_CODE_HEADER][0];
                 }
+
                 $result = $response->getContent(false);
             } else {
                 $result = 'HTTP Code : ' . $httpStatusCode;
@@ -75,6 +76,7 @@ class PlatiniumClient
             $result = 'Server error : ' . $e->getMessage();
             $httpStatusCode = -1;
         }
+
         return new PlatiniumPushResponse($httpStatusCode, $result);
     }
 }

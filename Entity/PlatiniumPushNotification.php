@@ -10,67 +10,55 @@ namespace Openium\PlatiniumBundle\Entity;
 class PlatiniumPushNotification
 {
     /**
-     * Message of the push notification
-     */
-    protected ?string $message = null;
-
-    /**
-     * Value of the application badge
-     */
-    protected int $badgeValue = 0;
-
-    /**
-     * Name of the sound integrated in your application
-     */
-    protected ?string $sound = null;
-
-    /**
-     * Is notification newsstand
-     * for silent push
-     */
-    protected bool $newsStand = false;
-
-    /**
-     * Array of additionnal parameters
-     *
-     * @var array<string, string>
-     */
-    protected array $paramsBag = [];
-
-    /**
      * PlatiniumPushNotification constructor.
      *
      * @param array<string, string> $paramsBag
      */
     public function __construct(
-        ?string $message = null,
-        array $paramsBag = [],
-        int $badgeValue = 0,
-        bool $newsStand = false,
-        ?string $sound = null
-    ) {
-        $this->message = $message;
-        $this->paramsBag = $paramsBag;
-        $this->badgeValue = $badgeValue;
-        $this->newsStand = $newsStand;
-        $this->sound = $sound;
+        /**
+         * Message of the push notification
+         */
+        protected ?string $message = null,
+        /**
+         * Array of additionnal parameters
+         */
+        protected array $paramsBag = [],
+        /**
+         * Value of the application badge
+         */
+        protected int $badgeValue = 0,
+        /**
+         * Is notification newsstand
+         * for silent push
+         */
+        protected bool $newsStand = false,
+        /**
+         * Name of the sound integrated in your application
+         */
+        protected ?string $sound = null
+    )
+    {
     }
 
     public function jsonFormat(): string
     {
         $jsonArray = ['newsstand' => $this->isNewsStand() ? 1 : 0];
-        if (!empty($this->message)) {
+        if ($this->message !== null && $this->message !== '' && $this->message !== '0') {
             $jsonArray['message'] = $this->message;
         }
-        if (!empty($this->sound)) {
+
+        if ($this->sound !== null && $this->sound !== '' && $this->sound !== '0') {
             $jsonArray['sound'] = $this->sound;
         }
-        if (!empty($this->badgeValue)) {
+
+        if ($this->badgeValue !== 0) {
             $jsonArray['badge'] = $this->badgeValue;
         }
-        if (!empty($this->paramsBag)) {
+
+        if ($this->paramsBag !== []) {
             $jsonArray['paramsbag'] = $this->paramsBag;
         }
+
         return sprintf('[%s]', json_encode($jsonArray));
     }
 
