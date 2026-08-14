@@ -83,7 +83,7 @@ class PlatiniumExtensionTest extends TestCase
     public function testContainerCompilesAndNotifierServiceIsUsable(): void
     {
         $container = $this->buildContainer();
-        $container->compile();
+        $container->compile(true);
 
         $notifier = $container->get('openium_platinium.notifier');
 

@@ -21,7 +21,7 @@ class PlatiniumParameterBagServiceTest extends TestCase
         $tokenDev = 'MockDevToken';
         $tokenProd = 'MockProdToken';
         $ppi = new PlatiniumPushInformation(['grp1'], ['fr']);
-        $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
+        $ppn = new PlatiniumPushNotification('push message', [], 1, false);
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $result = $ppbs->createPushParam($ppi, $ppn);
         $this->assertEquals(
@@ -43,7 +43,7 @@ class PlatiniumParameterBagServiceTest extends TestCase
         $ppi = new PlatiniumPushInformation(['grp1'], ['fr'], true);
         $ppi->setGeolocation(1.15, 2.16, 50, 500);
 
-        $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
+        $ppn = new PlatiniumPushNotification('push message', [], 1, false);
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $result = $ppbs->createPushParam($ppi, $ppn);
         $this->assertEquals(
@@ -73,7 +73,7 @@ class PlatiniumParameterBagServiceTest extends TestCase
         $ppi->expects($this->once())
             ->method('isGeolocated')
             ->will($this->returnValue(false));
-        $ppn = new PlatiniumPushNotification('push message', [], 1, false, null);
+        $ppn = new PlatiniumPushNotification('push message', [], 1, false);
         $ppbs = new PlatiniumParameterBagService($env, $tokenDev, $tokenProd);
         $ppbs->createPushParam($ppi, $ppn);
     }

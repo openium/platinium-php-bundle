@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Openium\PlatiniumBundle\Service;
 
 use Openium\PlatiniumBundle\Exception\InvalidPushGeolocationConfigurationException;

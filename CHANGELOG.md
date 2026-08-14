@@ -131,3 +131,28 @@ deprecations touch this bundle's surface (checked against UPGRADE-7.3.md and
 a real `composer update`). `phpstan.neon` unchanged (PHP floor still 8.2).
 `rector.php` still on `SymfonySetList::SYMFONY_71`, same `rector/rector`
 `^1.2` limitation as v2.2.0; ran rector anyway, nothing to apply.
+
+### v2.4.0 ###
+
+Update project to Symfony 7.4 (the next LTS release): bump
+`symfony/framework-bundle`, `symfony/http-client`, `symfony/http-foundation`,
+`symfony/yaml` and `symfony/phpunit-bridge` to `^7.4`. No code changes
+needed: none of 7.4's deprecations touch this bundle's surface (checked
+against UPGRADE-7.4.md and a real `composer update`) - notably
+`ExtensionInterface::getXsdValidationBasePath()`/`getNamespace()` are
+deprecated, but `PlatiniumExtension` doesn't override either. `phpstan.neon`
+unchanged (PHP floor still 8.2).
+
+Also upgraded `rector/rector` from `^1.2` to `^2.6` (and `phpstan/phpstan`
+from `^1.12` to `^2.2`, a hard requirement of rector 2.6) to get past the
+`SymfonySetList::SYMFONY_71` ceiling that's been a no-op every round since
+v2.2.0. rector.php now targets `SymfonySetList::COMPOSER_BASED`, which gates
+each rule by the actually-installed composer package version instead of a
+hardcoded per-minor constant, covering Symfony 3.4 through 8.1 - no more
+manual rector.php edits needed on future Symfony bumps. Ran the new set and
+applied what it found: `declare(strict_types=1)` on the files it judged safe
+to strict-type (it correctly skipped `PlatiniumClient.php` and
+`PlatiniumNotifier.php`, which have pre-existing type-precision issues -
+tracked separately, not fixed here), a couple of boolean/array-check
+simplifications, and one test made to compile its container the same way
+Symfony itself does during cache warmup (`compile(true)`).
