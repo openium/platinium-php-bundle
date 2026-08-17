@@ -20,9 +20,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 class PlatiniumClientTest extends TestCase
 {
-    private const SERVER_URL = 'https://platinium.example.test';
+    private const string SERVER_URL = 'https://platinium.example.test';
 
-    private const PATH = '/api/server/notify.json';
+    private const string PATH = '/api/server/notify.json';
 
     private function createClient(HttpClientInterface $httpClient): PlatiniumClient
     {

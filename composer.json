@@ -1,6 +1,6 @@
 {
   "name": "openium/platinium-bundle",
-  "description": "Provides push notification on Platinium for your Symfony7 Project",
+  "description": "Provides push notification on Platinium for your Symfony8 Project",
   "type": "symfony-bundle",
   "homepage": "http://platinium.openium.fr",
   "authors": [
@@ -20,22 +20,22 @@
     "MIT"
   ],
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.4",
     "ext-json": "*",
-    "symfony/framework-bundle": "^7.4",
-    "symfony/http-client": "^7.4",
-    "symfony/http-foundation": "^7.4",
-    "symfony/yaml": "^7.4"
+    "symfony/framework-bundle": "^8.0",
+    "symfony/http-client": "^8.0",
+    "symfony/http-foundation": "^8.0",
+    "symfony/yaml": "^8.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^7.4",
+    "symfony/phpunit-bridge": "^8.0",
     "rector/rector": "^2.6",
     "phpstan/phpstan": "^2.2"
   },
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "7.4.*"
+      "require": "8.0.*"
     },
     "phpstan": {
       "includes": [

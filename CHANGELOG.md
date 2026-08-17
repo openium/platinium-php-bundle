@@ -156,3 +156,27 @@ to strict-type (it correctly skipped `PlatiniumClient.php` and
 tracked separately, not fixed here), a couple of boolean/array-check
 simplifications, and one test made to compile its container the same way
 Symfony itself does during cache warmup (`compile(true)`).
+
+### v3.0.0 ###
+
+Update project to Symfony 8.0: bump `php` to `>=8.4` (Symfony 8.0's minimum
+PHP version) and `symfony/framework-bundle`, `symfony/http-client`,
+`symfony/http-foundation`, `symfony/yaml`, `symfony/phpunit-bridge` to
+`^8.0`. `phpstan.neon` phpVersion to `80400`, `rector.php` targets `php84`.
+
+Checked UPGRADE-8.0.md thoroughly since this is a major version bump: every
+removed API (XML config/routing, `!tagged`,
+`#[TaggedIterator]`/`#[TaggedLocator]`,
+`ExtensionInterface::getXsdValidationBasePath()`/`getNamespace()`,
+`RateLimiterFactory` autowiring, `amphp/http-client`, session/router/
+validation config options, `TranslationUpdateCommand`, `WorkflowDumpCommand`,
+`--show-arguments`) is something this bundle doesn't use - and unlike prior
+rounds this isn't just a doc read: the test suite has already been
+exercising symfony/dependency-injection and symfony/http-kernel resolved at
+8.1.x transitively since v2.4.0, with zero deprecations the whole way. Ran
+rector's `SymfonySetList::COMPOSER_BASED` set: nothing Symfony-specific
+matched, only `AddTypeToConstRector` adding native types to two class
+constants (a PHP 8.3+ feature now within reach).
+
+Major version bump because the PHP floor moved, matching this bundle's own
+precedent (v1.4.0/PHP 8.1, v2.0.0/PHP 8.2).
