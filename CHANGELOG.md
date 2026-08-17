@@ -180,3 +180,17 @@ constants (a PHP 8.3+ feature now within reach).
 
 Major version bump because the PHP floor moved, matching this bundle's own
 precedent (v1.4.0/PHP 8.1, v2.0.0/PHP 8.2).
+
+### v3.1.0 ###
+
+Update project to Symfony 8.1: bump `symfony/framework-bundle`,
+`symfony/http-client`, `symfony/http-foundation`, `symfony/yaml` and
+`symfony/phpunit-bridge` to `^8.1`. No code changes needed: the one
+deprecation with real teeth in UPGRADE-8.1.md -
+`Symfony\Component\HttpKernel\DependencyInjection\Extension` deprecated
+again - was already handled back in v2.0.0 when `PlatiniumExtension` was
+switched to the DependencyInjection component's version. Everything else
+(`BundleInterface`, `Bundle::registerCommands()`, `from_callable` option
+deprecations, `#[Target]` autowiring) doesn't touch this bundle. No PHP
+version change. Verified with a real `composer update`: test suite green, no
+deprecations, phpstan clean, rector found nothing to apply.
