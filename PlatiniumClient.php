@@ -18,7 +18,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class PlatiniumClient
 {
-    private const PLATINIUM_STATUS_CODE_HEADER = 'x-platinium-status-code';
+    private const string PLATINIUM_STATUS_CODE_HEADER = 'x-platinium-status-code';
 
     public function __construct(
         private readonly string $serverUrl,
